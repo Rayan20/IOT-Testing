@@ -1,19 +1,34 @@
-<nav class="navbar navbar-default" style = "background-color: aquamarine">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse " data-target="#myNavbar" >
-        <span class="icon-bar" ></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/" ><img class="irc_mi" src="https://www.findingzest.com/wp-content/uploads/2012/06/BANANAGRAMS-Logo.jpg" data-atf="0" width="150" height="75" style=""></a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+    <a class="navbar-brand" href="/"><img src="/public/images/lightbulb.jpeg" width="40" height="40"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/" style="color: royalblue">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" style="color: royalblue">
+                    IOTs
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                    <div class="dropdown-content">
+                        <a class="dropdown-item" href="/api/LEDLight" style="color:gold">Wifi Controlled LED Lights</a>
+                        <a class="dropdown-item" href="#" style="color:gold">Another IOT</a>
+                        <a class="dropdown-item" href="#" style="color:gold">Some Other IOT</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <button class="btn btn-outline-primary">Sign up</button>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="color: gray">Log in<span class="sr-only"></span></a>
+            </li>
+        </ul>
+
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar" >
-      <ul class="nav navbar-nav pull-right">
-          <li class = "li a:hover"><a href="/"><p><font size ="4"><strong>Normal Mode</strong></font></p></a></li>
-          <li class = "li a:hover" ><a href="/api/random"><p><font size ="4"><strong>Random Mode</strong></font></p></a></li>
-          <li class = "li a:hover"><a href="/api/bonus"><p><font size ="4"><strong>Bonus Mode</strong></font></p></a></li>
-      </ul>
-    </div>
-  </div>
 </nav>
