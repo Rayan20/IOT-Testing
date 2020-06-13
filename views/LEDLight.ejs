@@ -3,14 +3,136 @@
 <head>
     <% include partials/head %>
 </head>
-<body>
+<body class="body-ledGrad">
 <% include partials/menu %>
+
 <div class="container">
+    <h7 style="color:royalblue" class="text-center" id="status">LED Status: <span class="off">Off</span></h7>
     <div class="row">
+        <div class="col-sm-12-md-4">
+            <div class="card align-items-center"style="width: 18rem; height:28rem">
+                <img src="/public/images/turningon.jpeg" style="height:50%" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Turn LED on or off</h5>
+                    <button id="toggleButton" onclick="showToggleButton()" class="btn btn-primary">Turn on</button>
+                    <div id="hiddenCheckBox" style="display:none">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="selection" id="checkOn" value="On">
+                            <label class="form-check-label" for="checkOn">On</label>
+                            <br>
+                            <input type="radio" class="form-check-input" name="selection" id="checkOff" value="Off">
+                            <label class="form-check-label" for="checkOff">Off</label>
+                            <br>
+                            <br>
+                            <button onclick="saveRadioResult()" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12-md-4">
+            <div class="card align-items-center" id="card" style="width: 18rem;height:28rem" id="changeColor">
+                <img src="/public/images/changingcolor.jpeg" style="height:50%" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Change LED color</h5>
+                    <div class="pickr-container">
+                        <div class="color-picker" id="colorResult">
+                        </div>
+                        Click the square!
+                    </div>
+                    <div class="custom" id="custom" style="display: none; border:5px; border-style: solid; border-color:rebeccapurple"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12-md-4">
+            <div class="card align-items-center" style="width: 18rem; height:28rem" id="changeBrightness">
+                <img src="/public/images/brightness.jpg" style="height:50%" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Change LED brightness</h5>
+                    <input type="range" min="0" max="255" value="75" id="brightnessSlider">
+                    <p text-center id="sliderOutput">0</p>
+                    <br>
+                    <button onclick="sliderResult()" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 <script>
+    const pickr = Pickr.create({
+        el: '.color-picker',
+        theme: 'classic', // or 'monolith', or 'nano'
+        defaultRepresentation: "RGBA",
+
+        components: {
+
+            // Main components
+            preview: true,
+            opacity: true,
+            hue: true,
+
+            // Input / output Options
+            interaction: {
+                rgba: true,
+                input: true,
+                clear: true,
+                save: true
+            }
+        }
+    });
+    pickr.on('save', (color, instance) => {
+        pickr.setColorRepresentation("RGBA");
+        pickedColor = pickr.getColor().toRGBA();
+        this.custom.style.backgroundColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`;
+        var requestColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`
+        console.log(`rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`);
+        savedRadioResult = "On";
+        document.getElementById("custom").style.display = "block";
+    });
+
+    //Instantly outputting slider value
+    var slider = document.getElementById("brightnessSlider");
+    var sliderResult = document.getElementById("sliderOutput");
+
+    sliderResult.innerHTML = slider.value;
+
+    function sliderInput(){
+        return sliderResult;
+    }
+    slider.oninput = function () {
+        sliderResult.innerHTML = this.value;
+    }
+    var savedRadioResult = "Off";
+
+    //Taking in on or off button
+    function saveRadioResult() {
+        var radioButton = document.getElementsByName('selection');
+        for (i = 0; i < radioButton.length; i++) {
+            if (radioButton[i].checked) {
+                savedRadioResult = radioButton[i].value;
+            }
+        }
+        if (savedRadioResult === "On") {
+            document.getElementById("status").innerHTML
+                = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
+        }
+        else if(savedRadioResult === "Off"){
+            document.getElementById("status").innerHTML = "LED Status: " + "<span class='off''>" + savedRadioResult + "</span>";
+        }
+        // document.getElementById("status").innerHTML
+        //     = "LED status: " + savedRadioResult;
+    }
+
+    function showToggleButton() {
+        document.getElementById("toggleButton").style.display = "none";
+        document.getElementById("hiddenCheckBox").style.display = "block";
+    }
+
+    function hidebrightnessbutton() {
+        document.getElementById("changeBrightness").style.display = "none";
+        savedRadioResult = "On";
+    }
 </script>
 
 </html>
