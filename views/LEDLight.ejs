@@ -69,7 +69,7 @@
         // console.log(inputValue);
 
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '/api/test_blinker',
             dataType: 'json',
             data: {
@@ -128,6 +128,8 @@
         }).done(function (result) {
             var data = result.data;
             console.log(data);
+        }).fail(function(err) {
+            console.log(err);
         })
     })
 
