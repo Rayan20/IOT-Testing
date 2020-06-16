@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head %>
+</head>
+<body class="body-signupGrad">
+<div class="container">
+    <div class="row">
+        <div class="col-3"
+             style="background-image: linear-gradient(lightgoldenrodyellow, lightskyblue, deepskyblue); height:100%; border:2px; border-style: solid; border-color: black; height:75vh;">
+            <h3 class="text-center">Sign up!</h3>
+            <div class="form-group text-center" id="form">
+                <label for="username">
+                    <br>
+                </label>
+                <input type="text" class="form-control" id="username" placeholder="Create a username">
+                <label for="email"></label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                <label for="password"></label>
+                <input type="password" class="form-control" id="password" placeholder="Create a password">
+                <label for="passwordCheck"></label>
+                <input type="password" class="form-control" id="passwordCheck" placeholder="Retype your password">
+                <br>
+                <a href="/"><button class="btn btn-primary" type="submit">Sign up</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $(".col-3").hide(0).delay(500).fadeIn(3000)
+    });
+</script>
+
+</html>
+
+

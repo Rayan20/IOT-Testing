@@ -45,4 +45,15 @@
     background-image: linear-gradient(black, rebeccapurple);
 }
 
+.body-signupGrad {
+    background-color: purple;
+    background-image: linear-gradient(to right, deepskyblue, purple);
+}
+
+.body-loginGrad {
+    background-color: purple;
+    background-image: linear-gradient(to right, purple, deepskyblue, mediumpurple);
+
+}
+
 

@@ -4,6 +4,10 @@ var logger = require('morgan');
 var index = require('./routes/index');
 var api = require('./routes/api');
 var app = express();
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 
 // view engine setup

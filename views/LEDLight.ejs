@@ -5,14 +5,16 @@
 </head>
 <body class="body-ledGrad">
 <% include partials/menu %>
-
+<input type="number" id="testBlinker" placeholder="Input an integer
+">
+<button onclick="testIOT()">Save</button>
 <div class="container">
-    <h7 style="color:royalblue" class="text-center" id="status">LED Status: <span class="off">Off</span></h7>
     <div class="row">
         <div class="col-12 col-sm-4">
-            <div class="card align-items-center"style="width: 18rem; height:28rem">
+            <div class="card align-items-center" style="width: 18rem; height:28rem">
                 <img src="/public/images/turningon.jpeg" style="height:50%" class="card-img-top">
                 <div class="card-body text-center">
+                    <h7 style="color:gold" class="pull-left" id="status">LED Status: <span class="off">Off</span></h7>
                     <h5 class="card-title">Turn LED on or off</h5>
                     <button id="toggleButton" onclick="showToggleButton()" class="btn btn-primary">Turn on</button>
                     <div id="hiddenCheckBox" style="display:none">
@@ -40,7 +42,8 @@
                         </div>
                         Click the square!
                     </div>
-                    <div class="custom" id="custom" style="display: none; border:5px; border-style: solid; border-color:rebeccapurple"></div>
+                    <div class="custom" id="custom"
+                         style="display: none; border:5px; border-style: solid; border-color:rebeccapurple"></div>
                 </div>
             </div>
         </div>
@@ -52,7 +55,7 @@
                     <input type="range" min="0" max="255" value="75" id="brightnessSlider">
                     <p text-center id="sliderOutput">0</p>
                     <br>
-                    <button onclick="sliderResult()" class="btn btn-primary">Save</button>
+                    <button onclick="sliderInput()" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -60,6 +63,27 @@
 </div>
 </body>
 <script>
+
+    function testIOT() {
+        let inputValue = document.getElementById("testBlinker").value;
+        // console.log(inputValue);
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/test_blinker',
+            dataType: 'json',
+            data: {
+                input: inputValue
+            }
+
+
+        }).done(function (result) {
+            var data = result.data;
+            console.log(data);
+        })
+
+    }
+
     const pickr = Pickr.create({
         el: '.color-picker',
         theme: 'classic', // or 'monolith', or 'nano'
@@ -86,10 +110,27 @@
         pickedColor = pickr.getColor().toRGBA();
         this.custom.style.backgroundColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`;
         var requestColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`
-        console.log(`rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`);
+        // console.log(`rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`);
         savedRadioResult = "On";
         document.getElementById("custom").style.display = "block";
-    });
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/led_control/color',
+            dataType: 'json',
+            data: {
+                r: pickedColor[0],
+                b: pickedColor[1],
+                g: pickedColor[2]
+            }
+
+
+        }).done(function (result) {
+            var data = result.data;
+            console.log(data);
+        })
+    })
+
 
     //Instantly outputting slider value
     var slider = document.getElementById("brightnessSlider");
@@ -97,9 +138,10 @@
 
     sliderResult.innerHTML = slider.value;
 
-    function sliderInput(){
+    function sliderInput() {
         return sliderResult;
     }
+
     slider.oninput = function () {
         sliderResult.innerHTML = this.value;
     }
@@ -116,8 +158,7 @@
         if (savedRadioResult === "On") {
             document.getElementById("status").innerHTML
                 = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
-        }
-        else if(savedRadioResult === "Off"){
+        } else if (savedRadioResult === "Off") {
             document.getElementById("status").innerHTML = "LED Status: " + "<span class='off''>" + savedRadioResult + "</span>";
         }
         // document.getElementById("status").innerHTML
@@ -132,6 +173,7 @@
     function hidebrightnessbutton() {
         document.getElementById("changeBrightness").style.display = "none";
         savedRadioResult = "On";
+        document.getElementById("custom").style.display = "block";
     }
 </script>
 
