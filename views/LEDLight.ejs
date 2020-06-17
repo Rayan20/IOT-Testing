@@ -16,7 +16,7 @@
                 <div class="card-body text-center">
                     <h7 style="color:gold" class="pull-left" id="status">LED Status: <span class="off">Off</span></h7>
                     <h5 class="card-title">Turn LED on or off</h5>
-                    <button id="toggleButton" onclick="showToggleButton()" class="btn btn-primary">Turn on</button>
+                    <button id="toggleButton" onclick="showToggleButton()" class="btn btn-primary">Toggle</button>
                     <div id="hiddenCheckBox" style="display:none">
                         <div class="form-check">
                             <input type="radio" class="form-check-input" name="selection" id="checkOn" value="On">
@@ -43,7 +43,7 @@
                         Click the square!
                     </div>
                     <div class="custom" id="custom"
-                         style="display: none; border:5px; border-style: solid; border-color:rebeccapurple"></div>
+                         style="display: none; border:2px; border-style: solid; border-color:black"></div>
                 </div>
             </div>
         </div>
@@ -66,7 +66,6 @@
 
     function testIOT() {
         let inputValue = document.getElementById("testBlinker").value;
-        // console.log(inputValue);
 
         $.ajax({
             type: 'POST',
@@ -75,20 +74,16 @@
             data: {
                 input: inputValue
             }
-
-
         }).done(function (result) {
             var data = result.data;
             console.log(data);
         })
-
     }
 
     const pickr = Pickr.create({
         el: '.color-picker',
         theme: 'classic', // or 'monolith', or 'nano'
         defaultRepresentation: "RGBA",
-
         components: {
 
             // Main components
@@ -105,14 +100,18 @@
             }
         }
     });
+
     pickr.on('save', (color, instance) => {
+
         pickr.setColorRepresentation("RGBA");
         pickedColor = pickr.getColor().toRGBA();
+
         this.custom.style.backgroundColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`;
+
         var requestColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`
-        // console.log(`rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`);
-        savedRadioResult = "On";
         document.getElementById("custom").style.display = "block";
+
+        saveRadioResult("On");
 
         $.ajax({
             type: 'POST',
@@ -123,16 +122,13 @@
                 b: pickedColor[1],
                 g: pickedColor[2]
             }
-
-
         }).done(function (result) {
             var data = result.data;
             console.log(data);
-        }).fail(function(err) {
+        }).fail(function (err) {
             console.log(err);
         })
     })
-
 
     //Instantly outputting slider value
     var slider = document.getElementById("brightnessSlider");
@@ -141,30 +137,78 @@
     sliderResult.innerHTML = slider.value;
 
     function sliderInput() {
-        return sliderResult;
+
+        saveRadioResult("On");
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/led_control/brightness',
+            dataType: 'json',
+            data: {
+                input: slider.value
+            }
+        }).done(function (result) {
+            var data = result.data;
+            console.log(data);
+        }).fail(function (err) {
+            console.log(err);
+        })
     }
 
     slider.oninput = function () {
         sliderResult.innerHTML = this.value;
     }
-    var savedRadioResult = "Off";
+
+    var savedRadioResult;
 
     //Taking in on or off button
-    function saveRadioResult() {
+    function saveRadioResult(radioResult) {
         var radioButton = document.getElementsByName('selection');
         for (i = 0; i < radioButton.length; i++) {
             if (radioButton[i].checked) {
                 savedRadioResult = radioButton[i].value;
             }
         }
+
+        if (radioResult != null) {
+            savedRadioResult = radioResult;
+        }
+
         if (savedRadioResult === "On") {
             document.getElementById("status").innerHTML
                 = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/led_control/toggle',
+                dataType: 'json',
+                data: {
+                    input: savedRadioResult
+                }
+            }).done(function (result) {
+                var data = result.data;
+                console.log(data);
+            }).fail(function (err) {
+                console.log(err);
+            })
+
         } else if (savedRadioResult === "Off") {
             document.getElementById("status").innerHTML = "LED Status: " + "<span class='off''>" + savedRadioResult + "</span>";
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/led_control/toggle',
+                dataType: 'json',
+                data: {
+                    input: savedRadioResult
+                }
+            }).done(function (result) {
+                var data = result.data;
+                console.log(data);
+            }).fail(function (err) {
+                console.log(err);
+            })
         }
-        // document.getElementById("status").innerHTML
-        //     = "LED status: " + savedRadioResult;
     }
 
     function showToggleButton() {
@@ -172,11 +216,13 @@
         document.getElementById("hiddenCheckBox").style.display = "block";
     }
 
-    function hidebrightnessbutton() {
-        document.getElementById("changeBrightness").style.display = "none";
-        savedRadioResult = "On";
-        document.getElementById("custom").style.display = "block";
-    }
+    // $(document).ready(function () {
+    //     $("toggleButton").click(function(){
+    //         $("hiddenCheckBox").show();
+    //         $("toggleButton").hide();
+    //     });
+    // });
+
 </script>
 
 </html>

@@ -4,15 +4,34 @@
     <% include partials/head %>
 </head>
 <body class="body-loginGrad">
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            hi
+<div class="container" style="padding-top:5%">
+    <div class="faded">
+        <h3 class="text-center">Log in!</h3>
+        <div class="form-group text-center" id="form">
+            <label for="username">
+                <br>
+            </label>
+            <input style="background-color: lightskyblue; border-color: lightskyblue" type="text"
+                   class="form-control text-center" id="username" placeholder="Enter your username">
+            <label for="password"></label>
+            <input style="background-color: lightskyblue; border-color: lightskyblue" type="password"
+                   class="form-control text-center" id="password" placeholder="Enter your password">
+            <br>
+            <a href="/">
+                <button class="btn btn-primary" type="submit">Log in</button>
+            </a>
         </div>
+        <a href="/" class="btn btn-outline-secondary" style="color: deepskyblue; font-size:20px">Go home</a>
     </div>
+</div>
 </div>
 </body>
 <script>
+
+    $(document).ready(function () {
+        $(".faded").hide(0).delay(500).fadeIn(3000)
+    });
+
 </script>
 
 </html>

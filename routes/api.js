@@ -15,6 +15,11 @@ router.get('/signup', function (req, res, next) {
 });
 
 router.post('/led_control/color', ledController.setLEDColor);
+
 router.post('/test_blinker', ledController.testIOT);
+
+router.post('/led_control/brightness', ledController.setLEDBrightness);
+
+router.post('/led_control/toggle', ledController.toggle);
 
 module.exports = router;

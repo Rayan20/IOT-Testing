@@ -21,14 +21,20 @@
                 <label for="passwordCheck"></label>
                 <input type="password" class="form-control" id="passwordCheck" placeholder="Retype your password">
                 <br>
-                <a href="/"><button class="btn btn-primary" type="submit">Sign up</button></a>
+                <a href="/">
+                    <button class="btn btn-primary" type="submit">Sign up</button>
+                </a>
             </div>
+            <a href="/" class="btn btn-outline-secondary" style="color: rebeccapurple; font-size:10px" >Go home</a>
+        </div>
+        <div class="col-3">
+            <img src="/public/images/brightness.jpg">
         </div>
     </div>
 </div>
 </body>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $(".col-3").hide(0).delay(500).fadeIn(3000)
     });
 </script>
