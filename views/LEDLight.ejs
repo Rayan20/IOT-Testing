@@ -4,8 +4,10 @@
     <% include partials/head %>
 </head>
 <body class="body-ledGrad">
-<% include partials/menu %>
-<input type="number" id="testBlinker" placeholder="Input an integer
+<% include partials/signedInMenu %>
+<input type="number" id="testBlinker" placeholder="Number of blinks
+">
+<input type="number" id="testBlinkerDelay" placeholder="Delay
 ">
 <button onclick="testIOT()">Save</button>
 <div class="container">
@@ -66,13 +68,15 @@
 
     function testIOT() {
         let inputValue = document.getElementById("testBlinker").value;
+        let input1value = document.getElementById("testBlinkerDelay").value;
 
         $.ajax({
             type: 'POST',
             url: '/api/test_blinker',
             dataType: 'json',
             data: {
-                input: inputValue
+                input: inputValue,
+                input1: input1value
             }
         }).done(function (result) {
             var data = result.data;
@@ -215,13 +219,6 @@
         document.getElementById("toggleButton").style.display = "none";
         document.getElementById("hiddenCheckBox").style.display = "block";
     }
-
-    // $(document).ready(function () {
-    //     $("toggleButton").click(function(){
-    //         $("hiddenCheckBox").show();
-    //         $("toggleButton").hide();
-    //     });
-    // });
 
 </script>
 

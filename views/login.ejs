@@ -3,35 +3,87 @@
 <head>
     <% include partials/head %>
 </head>
-<body class="body-loginGrad">
-<div class="container" style="padding-top:5%">
-    <div class="faded">
-        <h3 class="text-center">Log in!</h3>
-        <div class="form-group text-center" id="form">
+<body class="body-loginGrad"></body>
+<body class="container" style="padding-top:5%">
+<div class="faded">
+    <h3 class="text-center">Log in!</h3>
+    <div class="error text-center" id="loginMsg" style="color:red"><font size="3"><%-loginMessage %></font></div>
+    <form class="cmxform" id="loginForm" method="post" autocomplete="on" style="padding-left: 15%; padding-right: 15%">
+        <div class="form-group text-center">
             <label for="username">
                 <br>
             </label>
             <input style="background-color: lightskyblue; border-color: lightskyblue" type="text"
-                   class="form-control text-center" id="username" placeholder="Enter your username">
+                   class="form-control text-center" id="username" placeholder="Enter your username" name="username">
             <label for="password"></label>
             <input style="background-color: lightskyblue; border-color: lightskyblue" type="password"
-                   class="form-control text-center" id="password" placeholder="Enter your password">
+                   class="form-control text-center" id="password" placeholder="Enter your password" name="password">
             <br>
-            <a href="/">
-                <button class="btn btn-primary" type="submit">Log in</button>
-            </a>
+            <label for="stayLoggedIn">Stay logged in</label>
+            <input class="check" type="checkbox" id="stayLoggedIn" name="stayLoggedIn">
+            <br>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Log in"></input>
         </div>
         <a href="/" class="btn btn-outline-secondary" style="color: deepskyblue; font-size:20px">Go home</a>
-    </div>
+    </form>
 </div>
-</div>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
 <script>
 
     $(document).ready(function () {
-        $(".faded").hide(0).delay(500).fadeIn(3000)
+
+        $("#loginForm").validate({
+            rules: {
+                username: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                }
+            },
+            messages: {
+                username: "Please enter a username",
+                password: {
+                    required: "Please provide a password",
+                }
+            },
+            submitHandler: function(form) {
+                callLoginServer(form);
+            }
+        })
     });
+    function callLoginServer(form) {
+
+        var username = form.username.value;
+        var password = form.password.value;
+        var stayLoggedIn = false;
+
+        if(form.stayLoggedIn.checked){
+            stayLoggedIn = true;
+        }
+        else{
+            stayLoggedIn = false;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/login/userLogin',
+            data: {
+                username: username,
+                password: password,
+                stayLoggedIn: stayLoggedIn
+            }
+        }).done(function (result) {
+            if (result && result.loginMessage) {
+                console.log(result.loginMessage);
+                $('#loginMsg').html(result.loginMessage);
+            } else {
+                top.location.href = '/home';
+            }
+        })
+    }
 
 </script>
-
+</body>
 </html>

@@ -44,11 +44,15 @@ exports.setLEDColor = function (req, res) {
 
 exports.testIOT = function (req, res) {
 
-    var input = req.body.input;
+    var blinkCount = req.body.input;
+    var delay = req.body.input1;
 
     request.post({
-        url: config.environment.iot.server + ':8080/lightblink',
-        data: input
+        url: config.environment.iot.server + ':8080/lightblink_post',
+        json: {
+            blinkCount: blinkCount,
+            delay: delay
+        }
 
     }, function (err, response) {
 

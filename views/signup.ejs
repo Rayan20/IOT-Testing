@@ -6,39 +6,106 @@
 <body class="body-signupGrad">
 <div class="container">
     <div class="row">
-        <div class="col-3"
-             style="background-image: linear-gradient(lightgoldenrodyellow, lightskyblue, deepskyblue); height:100%; border:2px; border-style: solid; border-color: black; height:75vh;">
+        <div class="col-sm-4 col-6" id="faded"
+             style="background-image: linear-gradient(lightgoldenrodyellow, lightskyblue, deepskyblue); height:100%; border:2px; border-style: solid; border-color: black; padding-bottom: 2%">
             <h3 class="text-center">Sign up!</h3>
-            <div class="form-group text-center" id="form">
-                <label for="username">
+            <div class="error text-center" id="signupMSG" style="color:red"><font size="3"></font></div>
+            <form class="cmxform" id="signupForm" method="post" autocomplete="on">
+                <div class="form-group text-center">
+                    <label for="username">
+                        <br>
+                    </label>
+                    <input style="background-color: lightskyblue; border-color: lightskyblue" type="text"
+                           class="form-control" id="username" placeholder="Create a username" name="username">
+                    <label for="email"></label>
+                    <input style="background-color: lightskyblue; border-color: lightskyblue" type="email"
+                           class="form-control" id="email" placeholder="Enter your email" name="email">
+                    <label for="password"></label>
+                    <input style="background-color: lightskyblue; border-color: lightskyblue" type="password"
+                           class="form-control" id="password" placeholder="Create a password" name="password">
+                    <label for="passwordCheck"></label>
+                    <input style="background-color: lightskyblue; border-color: lightskyblue" type="password"
+                           class="form-control" id="passwordCheck" placeholder="Retype your password"
+                           name="passwordCheck">
                     <br>
-                </label>
-                <input type="text" class="form-control" id="username" placeholder="Create a username">
-                <label for="email"></label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                <label for="password"></label>
-                <input type="password" class="form-control" id="password" placeholder="Create a password">
-                <label for="passwordCheck"></label>
-                <input type="password" class="form-control" id="passwordCheck" placeholder="Retype your password">
-                <br>
-                <a href="/">
                     <button class="btn btn-primary" type="submit">Sign up</button>
-                </a>
-            </div>
-            <a href="/" class="btn btn-outline-secondary" style="color: rebeccapurple; font-size:10px" >Go home</a>
-        </div>
-        <div class="col-3">
-            <img src="/public/images/brightness.jpg">
+                </div>
+            </form>
+            <a href="/" class="btn btn-outline-secondary" style="color: rebeccapurple; font-size:10px">Go home</a>
         </div>
     </div>
 </div>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
 <script>
     $(document).ready(function () {
-        $(".col-3").hide(0).delay(500).fadeIn(3000)
-    });
-</script>
 
+        $("#signupForm").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 3
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                passwordCheck: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                username: "Please enter a username",
+                password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                passwordCheck: {
+                    required: "Please confirm your password",
+                    minlength: "Your password must be at least 5 characters long",
+                    equalTo: "Your passwords do not match"
+                },
+                email: "Please enter a valid email address"
+            },
+            submitHandler: function (form) {
+                callServer(form);
+            }
+
+        })
+            });
+
+    function callServer(form) {
+        var username = form.username.value;
+        var email = form.email.value;
+        var password = form.password.value;
+
+        $.ajax({
+            type: 'POST',
+            url: '/login/registerAccount',
+            data: {
+                username: username,
+                email: email,
+                password: password
+            }
+        }).done(function (result) {
+            if (result && result.signupMessage) {
+                console.log(result.signupMessage);
+                $('#signupMSG').html(result.signupMessage);
+            } else {
+                top.location.href = '/login';
+            }
+
+        })
+    }
+
+
+</script>
+</body>
 </html>
 
 
