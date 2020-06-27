@@ -10,7 +10,7 @@ router.get('/LEDLight', function (req, res, next) {
     // else{
     //     res.render('LEDLight', {Username: mycookie, message: ''});
     // }
-    res.render('LEDLight', {Username: mycookie, message: ''});
+    res.render('LEDLight', {Username: '', message: ''});
 });
 
 router.get('/login', function (req, res, next) {
