@@ -19,7 +19,7 @@ module.exports = {
         user: "opmhpgnyutvoux",
         password: "c1d6cd8a358c74c5fd7248720dbf33863d7d8bc2a8b9e01dea10a3f40e5c0904",
         port: "5432",
-        database: "web",
+        database: "dfdbjkkk76vaff",
         debug: false,
         //multipleStatements: true,
         //connectionLimit: 10,
