@@ -6,8 +6,8 @@ module.exports = {
 
     },
     iot:{
-        server: "http://192.168.1.128"
-        //   server: "http://63.152.45.86"
+       // server: "http://192.168.1.128"
+        server: "http://63.152.45.86"
         // Riley's server: "50.80.241.185"
     },
 
