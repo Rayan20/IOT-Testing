@@ -10,6 +10,9 @@ module.exports = {
         server: "http://63.152.45.86"
         // Riley's server: "50.80.241.185"
     },
+    encryption: {
+       key: 'x&-{0p7yE#x7}^a',
+    },
 
     nodeJS: {
         enableCluster:false
