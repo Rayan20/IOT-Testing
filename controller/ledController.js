@@ -8,7 +8,7 @@ exports.setLEDColor = function (req, res) {
     var b = led_color.b;
 
     request.post({
-        url: config.environment.iot.server + ':8080/lightblink',
+        url: config.environment.iot.server + ':8080/update_light',
         data: {
             r: r, g: g, b: b
         },
