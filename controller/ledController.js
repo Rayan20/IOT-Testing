@@ -1,5 +1,6 @@
 var request = require('request');
 var config = require('../config');
+
 exports.setLEDColor = function (req, res) {
 
     var led_color = req.body;
@@ -48,7 +49,7 @@ exports.testIOT = function (req, res) {
     var delay = req.body.input1;
 
     request.post({
-        url: config.environment.iot.server + ':8080/lightblink_post',
+        url: config.environment.iot.server + ':8080/lightblink',
         json: {
             blinkCount: blinkCount,
             delay: delay
@@ -74,7 +75,7 @@ exports.setLEDBrightness = function (req, res) {
     var brightness = req.body;
 
     request.post({
-        url: config.environment.iot.server + ':8080/lightblink',
+        url: config.environment.iot.server + ':8080/',
         data: {
             brightness: brightness
         },
@@ -112,7 +113,7 @@ exports.toggle = function (req, res) {
     var toggle = req.body;
 
     request.post({
-        url: config.environment.iot.server + ':8080/lightblink',
+        url: config.environment.iot.server + ':8080/',
         data: {
             toggle: toggle
         },
