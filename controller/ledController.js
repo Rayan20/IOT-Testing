@@ -10,11 +10,8 @@ exports.setLEDColor = function (req, res) {
 
     request.post({
         url: config.environment.iot.server + ':8080/update_light',
-        data: {
+        json: {
             r: r, g: g, b: b
-        },
-        headers: {
-            'Content-Type': 'application/json'
         }
 
     }, function (err, response) {
@@ -76,11 +73,8 @@ exports.setLEDBrightness = function (req, res) {
 
     request.post({
         url: config.environment.iot.server + ':8080/',
-        data: {
+        json: {
             brightness: brightness
-        },
-        headers: {
-            'Content-Type': 'application/json'
         }
 
     }, function (err, response) {
@@ -114,11 +108,8 @@ exports.toggle = function (req, res) {
 
     request.post({
         url: config.environment.iot.server + ':8080/',
-        data: {
+        json: {
             toggle: toggle
-        },
-        headers: {
-            'Content-Type': 'application/json'
         }
 
     }, function (err, response) {

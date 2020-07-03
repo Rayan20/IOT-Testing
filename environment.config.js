@@ -7,8 +7,8 @@ module.exports = {
     },
     iot:{
        // server: "http://192.168.1.128"
-        server: "http://63.152.45.86"
-        //server: "50.80.241.185"
+        //server: "http://63.152.45.86"
+        server: "50.80.241.185"
     },
     encryption: {
        key: 'x&-{0p7yE#x7}^a',
