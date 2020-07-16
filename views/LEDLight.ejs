@@ -190,7 +190,7 @@
         }
 
         if (savedRadioResult === "On") {
-            var signal = true;
+            var signal = 1;
             document.getElementById("status").innerHTML
                 = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
 
@@ -199,7 +199,7 @@
                 url: '/api/led_control/toggle',
                 dataType: 'json',
                 data: {
-                    toggle: signal
+                    "toggle": signal
                 }
             }).done(function (result) {
                 var data = result.data;
@@ -209,7 +209,7 @@
             })
 
         } else if (savedRadioResult === "Off") {
-            var signal = false;
+            var signal = 0;
             document.getElementById("status").innerHTML = "LED Status: " + "<span class='off''>" + savedRadioResult + "</span>";
 
             $.ajax({
@@ -217,7 +217,7 @@
                 url: '/api/led_control/toggle',
                 dataType: 'json',
                 data: {
-                    toggle: signal
+                    "toggle": signal
                 }
             }).done(function (result) {
                 var data = result.data;

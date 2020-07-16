@@ -113,7 +113,7 @@ exports.toggle = function (req, res) {
     request.post({
         url: config.environment.iot.server + ':8080/toggle_led',
         json : {
-            toggle: toggle
+            "toggle": toggle
         }
 
     }, function (err, response) {
