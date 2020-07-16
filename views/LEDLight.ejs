@@ -161,7 +161,7 @@
             url: '/api/led_control/brightness',
             dataType: 'json',
             data: {
-                input: slider.value
+                brightness: slider.value
             }
         }).done(function (result) {
             console.log(result);
@@ -198,7 +198,7 @@
                 url: '/api/led_control/toggle',
                 dataType: 'json',
                 data: {
-                    savedRadioResult
+                    toggle: savedRadioResult
                 }
             }).done(function (result) {
                 var data = result.data;
@@ -215,7 +215,7 @@
                 url: '/api/led_control/toggle',
                 dataType: 'json',
                 data: {
-                    savedRadioResult
+                    toggle: savedRadioResult
                 }
             }).done(function (result) {
                 var data = result.data;
