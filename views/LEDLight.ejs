@@ -135,8 +135,8 @@
             dataType: 'json',
             data: {
                 r: pickedColor[0],
-                b: pickedColor[1],
-                g: pickedColor[2]
+                g: pickedColor[1],
+                b: pickedColor[2]
             }
         }).done(function (result) {
             var data = result.data;
@@ -190,6 +190,7 @@
         }
 
         if (savedRadioResult === "On") {
+            var signal = true;
             document.getElementById("status").innerHTML
                 = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
 
@@ -198,7 +199,7 @@
                 url: '/api/led_control/toggle',
                 dataType: 'json',
                 data: {
-                    toggle: savedRadioResult
+                    toggle: signal
                 }
             }).done(function (result) {
                 var data = result.data;
@@ -208,6 +209,7 @@
             })
 
         } else if (savedRadioResult === "Off") {
+            var signal = false;
             document.getElementById("status").innerHTML = "LED Status: " + "<span class='off''>" + savedRadioResult + "</span>";
 
             $.ajax({
@@ -215,7 +217,7 @@
                 url: '/api/led_control/toggle',
                 dataType: 'json',
                 data: {
-                    toggle: savedRadioResult
+                    toggle: signal
                 }
             }).done(function (result) {
                 var data = result.data;
