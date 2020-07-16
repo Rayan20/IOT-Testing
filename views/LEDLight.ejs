@@ -5,18 +5,18 @@
 </head>
 <body class="body-ledGrad">
 <% include partials/signedInMenu %>
-<input type="number" id="testBlinker" placeholder="Number of blinks">
-<input type="number" id="testBlinkerDelay" placeholder="Delay">
-<button onclick="testIOT()">Save</button>
+<!--<input type="number" id="testBlinker" placeholder="Number of blinks">-->
+<!--<input type="number" id="testBlinkerDelay" placeholder="Delay">-->
+<!--<button onclick="testIOT()">Save</button>-->
 <div class="container">
     <div class="row">
-        <div class="col-12 col-sm-4">
+        <div class="col-md-12 col-lg-4 col-sm-12">
             <div class="card align-items-center" style="width: 18rem; height:33rem">
                 <img src="/public/images/turningon.jpeg" style="height:50%" class="card-img-top">
                 <div class="card-body text-center">
                     <h7 style="color:gold" class="pull-left" id="status">LED Status: <span class="off">Off</span></h7>
                     <h5 class="card-title">Turn LED on or off</h5>
-                    <button id="toggleButton" onclick="showToggleButton()" class="btn btn-primary">Toggle</button>
+                    <button id="toggleButton" class="btn btn-primary">Toggle</button>
                     <div id="hiddenCheckBox" style="display:none">
                         <div class="form-check">
                             <input type="radio" class="form-check-input" name="selection" id="checkOn" value="On">
@@ -26,13 +26,13 @@
                             <label class="form-check-label" for="checkOff">Off</label>
                             <br>
                             <br>
-                            <button onclick="saveRadioResult()" class="btn btn-primary">Save</button>
+                            <button id="toggleSave" class="btn btn-primary">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-12 col-lg-4 col-sm-12">
             <div class="card align-items-center" id="card" style="width: 18rem;height:33rem" id="changeColor">
                 <img src="/public/images/changingcolor.jpeg" style="height:50%" class="card-img-top">
                 <div class="card-body text-center">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-12 col-lg-4 col-sm-12">
             <div class="card align-items-center" style="width: 18rem; height:33rem" id="changeBrightness">
                 <img src="/public/images/brightness.jpg" style="height:50%" class="card-img-top">
                 <div class="card-body text-center">
@@ -63,6 +63,20 @@
 </div>
 </body>
 <script>
+
+    $(document).ready(function(){
+        $("#toggleButton").click(function(){
+            $("#hiddenCheckBox").show();
+            $("#toggleButton").hide();
+            $("#toggleSave").show();
+        })
+        $("#toggleSave").click(function () {
+            $("#hiddenCheckBox").hide();
+            $("#toggleButton").show();
+            $("#toggleSave").hide();
+            saveRadioResult();
+        })
+    })
 
     function testIOT() {
         let inputValue = document.getElementById("testBlinker").value;
@@ -150,8 +164,7 @@
                 input: slider.value
             }
         }).done(function (result) {
-            var data = result.data;
-            console.log(data);
+            console.log(result);
         }).fail(function (err) {
             console.log(err);
         })
@@ -211,11 +224,6 @@
                 console.log(err);
             })
         }
-    }
-
-    function showToggleButton() {
-        document.getElementById("toggleButton").style.display = "none";
-        document.getElementById("hiddenCheckBox").style.display = "block";
     }
 
 </script>

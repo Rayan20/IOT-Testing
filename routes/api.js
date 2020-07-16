@@ -36,7 +36,7 @@ router.get('/temperatureAndHumidity', function (req, res, next) {
 
 router.post('/led_control/color', ledController.setLEDColor);
 
-router.post('/test_blinker', ledController.testIOT);
+// router.post('/test_blinker', ledController.testIOT);
 
 router.post('/led_control/brightness', ledController.setLEDBrightness);
 

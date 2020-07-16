@@ -40,32 +40,32 @@ exports.setLEDColor = function (req, res) {
 };
 
 
-exports.testIOT = function (req, res) {
-
-    var blinkCount = req.body.input;
-    var delay = req.body.input1;
-
-    request.post({
-        url: config.environment.iot.server + ':8080/lightblink',
-        json: {
-            blinkCount: blinkCount,
-            delay: delay
-        }
-
-    }, function (err, response) {
-
-        if (err) {
-            console.log(err);
-
-        } else {
-
-            if (response.statusCode == 200) {
-
-            } else if (response.statusCode !== 200) {
-            }
-        }
-    });
-};
+// exports.testIOT = function (req, res) {
+//
+//     var blinkCount = req.body.input;
+//     var delay = req.body.input1;
+//
+//     request.post({
+//         url: config.environment.iot.server + ':8080/lightblink',
+//         json: {
+//             blinkCount: blinkCount,
+//             delay: delay
+//         }
+//
+//     }, function (err, response) {
+//
+//         if (err) {
+//             console.log(err);
+//
+//         } else {
+//
+//             if (response.statusCode == 200) {
+//
+//             } else if (response.statusCode !== 200) {
+//             }
+//         }
+//     });
+// };
 
 exports.setLEDBrightness = function (req, res) {
 
