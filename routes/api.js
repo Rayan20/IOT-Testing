@@ -20,6 +20,20 @@ router.get('/signup', function (req, res, next) {
     res.render('signup', {title: 'Express', signupMessage: ''});
 });
 
+router.get('/shoppingList', function (req, res, next) {
+    res.render('shoppingList', {title: 'Express'});
+});
+
+router.get('/temperatureAndHumidity', function (req, res, next) {
+    var mycookie = req.cookies[IOTCookie];
+    if(!mycookie){
+        res.render('login', {loginMessage: ''});
+    }
+    else{
+        res.render('temperatureAndHumidity', {Username: mycookie, message: ''});
+    }
+});
+
 router.post('/led_control/color', ledController.setLEDColor);
 
 router.post('/test_blinker', ledController.testIOT);

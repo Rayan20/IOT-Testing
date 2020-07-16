@@ -53,7 +53,11 @@
 .body-loginGrad {
     background-color: purple;
     background-image: linear-gradient(to right, purple, deepskyblue, mediumpurple);
+}
 
+.input-bodyGrad {
+    background-color: purple;
+    background-image: linear-gradient(to right, purple, deepskyblue, purple);
 }
 
 .check{
@@ -64,4 +68,9 @@
 .pull-right{
     position:relative;
     left: 90%;
+}
+
+.body-tempGrad {
+    background-color: springgreen;
+    background-image: linear-gradient(black, aqua);
 }
