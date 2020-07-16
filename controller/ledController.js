@@ -69,11 +69,15 @@ exports.setLEDColor = function (req, res) {
 
 exports.setLEDBrightness = function (req, res) {
 
-    var brightness = req.body;
+    var brightnessBody = req.body;
+    var brightness = brightnessBody.brightness;
+
 
     request.post({
         url: config.environment.iot.server + ':8080/update_brightness',
-        brightness
+        json : {
+            brightness: brightness
+        }
 
     }, function (err, response) {
 
@@ -102,11 +106,15 @@ exports.setLEDBrightness = function (req, res) {
 
 exports.toggle = function (req, res) {
 
-    var toggle = req.body;
+    var toggleBody = req.body;
+    var toggle = toggleBody.toggle;
+
 
     request.post({
         url: config.environment.iot.server + ':8080/toggle_led',
-        toggle
+        json : {
+            toggle: toggle
+        }
 
     }, function (err, response) {
 
