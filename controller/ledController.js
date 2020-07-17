@@ -75,7 +75,7 @@ exports.setLEDBrightness = function (req, res) {
 
     request.post({
         url: config.environment.iot.server + ':8080/update_brightness',
-        json : {
+        json: {
             brightness: brightness
         }
 
@@ -112,7 +112,7 @@ exports.toggle = function (req, res) {
 
     request.post({
         url: config.environment.iot.server + ':8080/toggle_led',
-        json : {
+        json: {
             "toggle": toggle
         }
 
@@ -140,4 +140,9 @@ exports.toggle = function (req, res) {
         });
     });
 };
+
+exports.getIP = function (req, res) {
+    global.clientID = req.ip;
+};
+
 
