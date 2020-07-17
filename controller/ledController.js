@@ -3,8 +3,8 @@ var config = require('../config');
 
 exports.setLEDColor = function (req, res) {
 
-    if(!clientID){
-        clientID = 0;
+    if(!clientIP){
+        clientIP = 0;
     }
 
     var led_color = req.body;
@@ -13,7 +13,7 @@ exports.setLEDColor = function (req, res) {
     var b = led_color.b;
 
     request.post({
-        url: clientID + ':8080/update_rgb',
+        url: clientIP + ':8080/update_rgb',
         json: {
             r: r, g: g, b: b
         }
@@ -73,8 +73,8 @@ exports.setLEDColor = function (req, res) {
 
 exports.setLEDBrightness = function (req, res) {
 
-    if(!clientID){
-        clientID = 0;
+    if(!clientIP){
+        clientIP = 0;
     }
 
     var brightnessBody = req.body;
@@ -82,7 +82,7 @@ exports.setLEDBrightness = function (req, res) {
 
 
     request.post({
-        url: clientID + ':8080/update_brightness',
+        url: clientIP + ':8080/update_brightness',
         json: {
             brightness: brightness
         }
@@ -114,8 +114,8 @@ exports.setLEDBrightness = function (req, res) {
 
 exports.toggle = function (req, res) {
 
-    if(!clientID){
-        clientID = 0;
+    if(!clientIP){
+        clientIP = 0;
     }
 
     var toggleBody = req.body;
@@ -123,7 +123,7 @@ exports.toggle = function (req, res) {
 
 
     request.post({
-        url: clientID + ':8080/toggle_led',
+        url: clientIP + ':8080/toggle_led',
         json: {
             "toggle": toggle
         }
@@ -154,7 +154,8 @@ exports.toggle = function (req, res) {
 };
 
 exports.getIP = function (req, res) {
-    global.clientID = req.ip;
+    var one = req.body;
+    global.clientIP = req.ip;
 };
 
 
