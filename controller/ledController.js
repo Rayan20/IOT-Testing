@@ -3,13 +3,17 @@ var config = require('../config');
 
 exports.setLEDColor = function (req, res) {
 
+    if(!clientID){
+        clientID = 0;
+    }
+
     var led_color = req.body;
     var r = led_color.r;
     var g = led_color.g;
     var b = led_color.b;
 
     request.post({
-        url: config.environment.iot.server + ':8080/update_rgb',
+        url: clientID + ':8080/update_rgb',
         json: {
             r: r, g: g, b: b
         }
@@ -69,12 +73,16 @@ exports.setLEDColor = function (req, res) {
 
 exports.setLEDBrightness = function (req, res) {
 
+    if(!clientID){
+        clientID = 0;
+    }
+
     var brightnessBody = req.body;
     var brightness = brightnessBody.brightness;
 
 
     request.post({
-        url: config.environment.iot.server + ':8080/update_brightness',
+        url: clientID + ':8080/update_brightness',
         json: {
             brightness: brightness
         }
@@ -106,12 +114,16 @@ exports.setLEDBrightness = function (req, res) {
 
 exports.toggle = function (req, res) {
 
+    if(!clientID){
+        clientID = 0;
+    }
+
     var toggleBody = req.body;
     var toggle = toggleBody.toggle;
 
 
     request.post({
-        url: config.environment.iot.server + ':8080/toggle_led',
+        url: clientID + ':8080/toggle_led',
         json: {
             "toggle": toggle
         }
