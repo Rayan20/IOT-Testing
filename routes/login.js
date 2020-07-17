@@ -49,7 +49,7 @@ router.post('/registerAccount', function (req, res, next) {
 
                 })
             } else {
-                res.setHeader('Content-Type', 'application/json');
+                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify({"signupMessage": "Username already exists"}));
             }
         }
