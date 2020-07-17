@@ -47,6 +47,6 @@ router.get('/clear_cookie', function (req, res, next) {
     res.redirect('/login');
 });
 
-router.post('/client_ip', ledController.getIP);
+router.post('/led_control/client_ip', ledController.getIP);
 
 module.exports = router;

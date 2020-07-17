@@ -1,4 +1,4 @@
-const environment = require('./environment.config');
+const environment = require('./environment.config-local');
 
 module.exports = {
   environment,
