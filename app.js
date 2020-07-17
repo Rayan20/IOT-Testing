@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 global.IOTCookie = 'iot_cookie';
 app.use(cookieParser(IOTCookie));
+global.clientIP = '1';
 
 
 
@@ -41,6 +42,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {status:err.status, message:err.message});
 });
+
 
 
 module.exports = app;
