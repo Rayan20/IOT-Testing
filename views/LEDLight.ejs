@@ -5,23 +5,30 @@
 </head>
 <body class="body-ledGrad">
 <% include partials/signedInMenu %>
-<!--<input type="number" id="testBlinker" placeholder="Number of blinks">-->
-<!--<input type="number" id="testBlinkerDelay" placeholder="Delay">-->
-<!--<button onclick="testIOT()">Save</button>-->
+
+<div id="innerAlert" class="text-center on"></div>
+<div id="innerError" class="text-center off"></div>
+
 <div class="container">
+
     <div class="row">
+
         <div class="col-md-12 col-lg-4 col-sm-12">
-            <div class="text-center" style="color: green">
-                <%= toggle_response%> hello
-                <br></div>
+
             <div class="card align-items-center" style="width: 18rem; height:33rem">
+
                 <img src="/public/images/turningon.jpeg" style="height:50%" class="card-img-top">
+
                 <div class="card-body text-center">
+
                     <h7 style="color:gold" class="pull-left" id="status">LED Status: <span class="off">Off</span></h7>
                     <h5 class="card-title">Turn LED on or off</h5>
                     <button id="toggleButton" class="btn btn-primary">Toggle</button>
+
                     <div id="hiddenCheckBox" style="display:none">
+
                         <div class="form-check">
+
                             <input type="radio" class="form-check-input" name="selection" id="checkOn" value="On">
                             <label class="form-check-label" for="checkOn">On</label>
                             <br>
@@ -30,51 +37,75 @@
                             <br>
                             <br>
                             <button id="toggleSave" class="btn btn-primary">Save</button>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
+
         <div class="col-md-12 col-lg-4 col-sm-12">
-            <div class="text-center" style="color: green">
-                <%= color_response%>   hello
-                <br></div>
+
             <div class="card align-items-center" id="card" style="width: 18rem;height:33rem" id="changeColor">
+
                 <img src="/public/images/changingcolor.jpeg" style="height:50%" class="card-img-top">
+
                 <div class="card-body text-center">
+
                     <h5 class="card-title">Change LED color</h5>
+
                     <div class="pickr-container">
+
                         <div class="color-picker" id="colorResult">
+
                         </div>
-                        Click the square!
+
+                        <br>
+                        <h5>Click the square!</h5>
+
                     </div>
+
                     <div class="custom" id="custom"
                          style="display: none; border:2px; border-style: solid; border-color:black"></div>
+
                 </div>
+
             </div>
+
         </div>
+
         <div class="col-md-12 col-lg-4 col-sm-12">
-            <div class="text-center" style="color: green">
-                <%= brightness_response%>  hello
-                <br></div>
+
             <div class="card align-items-center" style="width: 18rem; height:33rem" id="changeBrightness">
+
                 <img src="/public/images/brightness.jpg" style="height:50%" class="card-img-top">
+
                 <div class="card-body text-center">
+
                     <h5 class="card-title">Change LED brightness</h5>
                     <input type="range" min="0" max="255" value="75" id="brightnessSlider">
                     <p text-center id="sliderOutput">0</p>
                     <br>
                     <button onclick="sliderInput()" class="btn btn-primary">Save</button>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
-</body>
+
 <script>
 
-    $(document).ready(function(){
-        $("#toggleButton").click(function(){
+    $(document).ready(function () {
+        $("#toggleButton").click(function () {
             $("#hiddenCheckBox").show();
             $("#toggleButton").hide();
             $("#toggleSave").show();
@@ -149,6 +180,19 @@
             }
         }).done(function (result) {
             var data = result.data;
+            var status = result.status;
+            if(result.code == 200){
+                $('#innerAlert').fadeIn(1000).html(status);
+                setTimeout(function(){
+                    $('#innerAlert').fadeOut(1000)
+                },3000);
+            }
+            else{
+                $('#innerError').fadeIn(1000).html(status);
+                setTimeout(function(){
+                    $('#innerError').fadeOut(1000)
+                },3000);
+            }
             console.log(data);
         }).fail(function (err) {
             console.log(err);
@@ -173,6 +217,19 @@
                 brightness: slider.value
             }
         }).done(function (result) {
+            var data = result.data;
+            var status = result.status;
+            if(result.code == 200){
+                $('#innerAlert').fadeIn(1000).html(status);
+                setTimeout(function(){
+                    $('#innerAlert').fadeOut(1000)
+                },3000);            }
+            else{
+                $('#innerError').fadeIn(1000).html(status);
+                setTimeout(function(){
+                    $('#innerError').fadeOut(1000)
+                },3000);
+            }
             console.log(result);
         }).fail(function (err) {
             console.log(err);
@@ -200,8 +257,6 @@
 
         if (savedRadioResult === "On") {
             var signal = 1;
-            document.getElementById("status").innerHTML
-                = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
 
             $.ajax({
                 type: 'POST',
@@ -212,6 +267,14 @@
                 }
             }).done(function (result) {
                 var data = result.data;
+                var status = result.status;
+                if(result.code == 200){
+                    document.getElementById("status").innerHTML
+                        = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
+                }
+                else{
+                    document.getElementById("status").innerHTML = "LED Status: " + "<span class='off'>" + savedRadioResult + "</span>";
+                }
                 console.log(data);
             }).fail(function (err) {
                 console.log(err);
@@ -219,7 +282,6 @@
 
         } else if (savedRadioResult === "Off") {
             var signal = 0;
-            document.getElementById("status").innerHTML = "LED Status: " + "<span class='off''>" + savedRadioResult + "</span>";
 
             $.ajax({
                 type: 'POST',
@@ -230,6 +292,16 @@
                 }
             }).done(function (result) {
                 var data = result.data;
+                var status = result.status;
+                if(result.code == 200){
+                    document.getElementById("status").innerHTML
+                        = "LED Status: " + "<span class='off'>" + savedRadioResult + "</span>";
+                }
+                else{
+                    document.getElementById("status").innerHTML
+                        = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
+
+                }
                 console.log(data);
             }).fail(function (err) {
                 console.log(err);
@@ -238,5 +310,7 @@
     }
 
 </script>
+</body>
+
 
 </html>

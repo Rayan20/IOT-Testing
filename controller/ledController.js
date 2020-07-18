@@ -1,6 +1,9 @@
 var request = require('request');
 var config = require('../config');
+
 exports.setLEDColor = function (req, res) {
+
+
 
     var led_color = req.body;
     var r = led_color.r;
@@ -22,19 +25,27 @@ exports.setLEDColor = function (req, res) {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.statusCode);
+                console.log("status code=" + response.statusMessage);
+                res.send({
+                    'code': 200,
+                    'data': {
+                        'r': r, 'b': b, 'g': g
+                    },
+                    'status': response.headers['content-type']
+                });
 
             } else if (response.statusCode !== 200) {
                 console.log("non 200 status code=" + response.statusCode);
+                res.send({
+                    'code': 200,
+                    'data': {
+                        'r': r, 'b': b, 'g': g
+                    },
+                    'status': response.headers['content-type']
+                });
             }
         }
 
-        res.send({
-            'code': 200,
-            'data': {
-                'r': r, 'b': b, 'g': g
-            },
-            'status': 'success'
-        });
     });
 };
 
@@ -86,7 +97,7 @@ exports.setLEDBrightness = function (req, res) {
         } else {
 
             if (response.statusCode == 200) {
-                console.log("status code=" + response.statusCode);
+                console.log("status code=" + response.headers['content-type']);
 
             } else if (response.statusCode !== 200) {
                 console.log("non 200 status code=" + response.statusCode);
@@ -98,7 +109,7 @@ exports.setLEDBrightness = function (req, res) {
             'data': {
                 'brightness': brightness
             },
-            'status': 'success'
+            'status': response.headers['content-type']
         });
     });
 };
@@ -123,7 +134,7 @@ exports.toggle = function (req, res) {
         } else {
 
             if (response.statusCode == 200) {
-                console.log("status code=" + response.statusCode);
+                console.log("status code=" + response.headers['content-type']);
 
             } else if (response.statusCode !== 200) {
                 console.log("non 200 status code=" + response.statusCode);
@@ -135,7 +146,7 @@ exports.toggle = function (req, res) {
             'data': {
                 'toggle': toggle
             },
-            'status': 'success'
+            'status': response.headers['content-type']
         });
     });
 };
