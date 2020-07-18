@@ -155,6 +155,7 @@ exports.getIP = function (req, res) {
     var ip = req.params.ip;
     clientIP = ip;
     res.send(200);
+    console.log("Received IP is: " + ip);
 };
 
 
