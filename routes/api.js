@@ -8,7 +8,7 @@ router.get('/LEDLight', function (req, res, next) {
         res.render('login', {loginMessage: ''});
     }
     else{
-        res.render('LEDLight', {Username: mycookie, message: '', toggle_response: '', color_response: '', brightness_response: ''});
+        res.render('LEDLight', {Username: mycookie, message: ''});
     }
 });
 

@@ -6,6 +6,10 @@
 <body class="body-ledGrad">
 <% include partials/signedInMenu %>
 
+<div class="text-center" id="errorMessage" style="color:red"></div>
+
+<br>
+
 <div class="text-center box-3">
     <div class="btn btn-three" style="border: solid; border-color: lightskyblue; border-width: 2px"
          onclick="syncData()">
@@ -172,6 +176,9 @@
                 b: pickedColor[2]
             }
         }).done(function (result) {
+            if(result === 500){
+                $('#errorMessage').html("LED may not be online");
+            }
             var data = result.data;
             var status = result.status;
             if (result.code == 200) {
@@ -179,7 +186,8 @@
                 setTimeout(function () {
                     $('#innerAlert').fadeOut(1000)
                 }, 3000);
-            } else {
+            }
+            else {
                 $('#innerError').fadeIn(1000).html(status);
                 setTimeout(function () {
                     $('#innerError').fadeOut(1000)
@@ -209,6 +217,9 @@
                 brightness: slider.value
             }
         }).done(function (result) {
+            if(result === 500){
+                $('#errorMessage').html("LED may not be online");
+            }
             var data = result.data;
             var status = result.status;
             if (result.code == 200) {
@@ -258,6 +269,9 @@
                     "toggle": signal
                 }
             }).done(function (result) {
+                if(result === 500){
+                    $('#errorMessage').html("LED may not be online");
+                }
                 var data = result.data;
                 var status = result.status;
                 if (result.code == 200) {
@@ -282,6 +296,9 @@
                     "toggle": signal
                 }
             }).done(function (result) {
+                if(result === 500){
+                    $('#errorMessage').html("LED may not be online");
+                }
                 var data = result.data;
                 var status = result.status;
                 if (result.code == 200) {
@@ -304,6 +321,9 @@
                 type: 'GET',
                 url: '/api/led_control/sync_data',
             }).done(function (result) {
+            if(result === "500"){
+                $('#errorMessage').html("LED may not be online");
+            }
                 var data = result.data;
                 var status = result.status;
                 if(result.code == 200){

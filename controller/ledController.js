@@ -13,14 +13,21 @@ exports.setLEDColor = function (req, res) {
         url: 'http://' + clientIP + ':8080/update_rgb',
         json: {
             r: r, g: g, b: b
-        }
+        },
+        timeout: 5000
 
     }, function (err, response) {
 
         if (err) {
             console.log(err);
+            if (err.code === 'EHOSTUNREACH') {
+                return res.send("500");
+            } else {
+                return res.send("500");
 
-        } else {
+            }
+        }
+        else {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.statusCode);
@@ -48,34 +55,6 @@ exports.setLEDColor = function (req, res) {
     });
 };
 
-
-// exports.testIOT = function (req, res) {
-//
-//     var blinkCount = req.body.input;
-//     var delay = req.body.input1;
-//
-//     request.post({
-//         url: config.environment.iot.server + ':8080/lightblink',
-//         json: {
-//             blinkCount: blinkCount,
-//             delay: delay
-//         }
-//
-//     }, function (err, response) {
-//
-//         if (err) {
-//             console.log(err);
-//
-//         } else {
-//
-//             if (response.statusCode == 200) {
-//
-//             } else if (response.statusCode !== 200) {
-//             }
-//         }
-//     });
-// };
-
 exports.setLEDBrightness = function (req, res) {
 
     var brightnessBody = req.body;
@@ -86,14 +65,20 @@ exports.setLEDBrightness = function (req, res) {
         url: 'http://' + clientIP + ':8080/update_brightness',
         json: {
             brightness: brightness
-        }
+        },
+        timeout: 5000
 
     }, function (err, response) {
 
         if (err) {
             console.log(err);
-
-        } else {
+            if (err.code === 'EHOSTUNREACH') {
+                return res.send("500");
+            } else {
+                return res.send("500");
+            }
+        }
+        else {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.headers['content-type']);
@@ -123,14 +108,20 @@ exports.toggle = function (req, res) {
         url: 'http://' + clientIP + ':8080/toggle_led',
         json: {
             "toggle": toggle
-        }
+        },
+        timeout: 5000
 
     }, function (err, response) {
 
         if (err) {
             console.log(err);
-
-        } else {
+            if (err.code === 'EHOSTUNREACH') {
+                return res.send("500");
+            } else {
+                return res.send("500");
+            }
+        }
+            else {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.headers['content-type']);
@@ -138,15 +129,14 @@ exports.toggle = function (req, res) {
             } else if (response.statusCode !== 200) {
                 console.log("non 200 status code=" + response.statusCode);
             }
+            res.send({
+                'code': 200,
+                'data': {
+                    'toggle': toggle
+                },
+                'status': response.headers['content-type']
+            });
         }
-
-        res.send({
-            'code': 200,
-            'data': {
-                'toggle': toggle
-            },
-            'status': response.headers['content-type']
-        });
     });
 };
 
@@ -160,8 +150,14 @@ exports.getIP = function (req, res) {
 exports.syncData = function (req, res) {
     request.get({
         url: 'http://' + clientIP + ':8080/sync_data',
+        timeout: 5000
     }, function (err, response) {
         if (err) {
+            if (err.code === 'EHOSTUNREACH') {
+                return res.send("500");
+            } else {
+                return res.send("500");
+            }
             console.log(err);
         } else {
             if (response.statusCode == 200) {
