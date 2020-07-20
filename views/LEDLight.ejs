@@ -9,9 +9,11 @@
 <div class="text-center box-3">
     <div class="btn btn-three" style="border: solid; border-color: lightskyblue; border-width: 2px"
          onclick="syncData()">
-        <span>Sync LED To Current Status</span>
+        <span>Sync To Current LED Status</span>
     </div>
 </div>
+
+<br>
 
 <div id="innerAlert" class="text-center on"></div>
 
@@ -73,7 +75,7 @@
                         </div>
 
                         <br>
-                        <h5>Click the square!</h5>
+                        <h5 id="notif" style="display: none">Below is the current color</h5>
 
                     </div>
 
@@ -156,6 +158,7 @@
 
         var requestColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`
         document.getElementById("custom").style.display = "block";
+        $('#notif').show();
 
         saveRadioResult("On");
 
@@ -314,7 +317,8 @@
                     console.log(status);
                     document.getElementById("brightnessSlider").value = resultBrightness;
                     $('#sliderOutput').html(resultBrightness);
-                    $('#custom').show()
+                    document.getElementById("custom").style.display = "block";
+                    $('#notif').show();
                     $('#custom').css("backgroundColor", `rgb(${resultRed}, ${resultGreen}, ${resultBlue})`);
                     if(resultToggle == 0){
                         $('#status').html("LED is Off").css("color", "#FFD700");
