@@ -68,7 +68,7 @@
 
                     <h5 class="card-title">Change LED color</h5>
 
-                    <div class="pickr-container">
+                    <div class="text-center pickr-container">
 
                         <div class="color-picker" id="colorResult">
 
@@ -77,10 +77,10 @@
                         <br>
                         <h5 id="notif" style="display: none">Below is the current color</h5>
 
-                    </div>
+                        <div class="custom" id="custom"
+                             style="display: none; border:2px; border-style: solid; border-color:black"></div>
 
-                    <div class="custom" id="custom"
-                         style="display: none; border:2px; border-style: solid; border-color:black"></div>
+                    </div>
 
                 </div>
 
@@ -157,7 +157,7 @@
         this.custom.style.backgroundColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`;
 
         var requestColor = `rgba(${pickedColor[0]},${pickedColor[1]},${pickedColor[2]},1)`
-        document.getElementById("custom").style.display = "block";
+        $('#custom').show();
         $('#notif').show();
 
         saveRadioResult("On");
@@ -317,7 +317,7 @@
                     console.log(status);
                     document.getElementById("brightnessSlider").value = resultBrightness;
                     $('#sliderOutput').html(resultBrightness);
-                    document.getElementById("custom").style.display = "block";
+                    $('#custom').show();
                     $('#notif').show();
                     $('#custom').css("backgroundColor", `rgb(${resultRed}, ${resultGreen}, ${resultBlue})`);
                     if(resultToggle == 0){
