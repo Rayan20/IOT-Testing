@@ -6,7 +6,15 @@
 <body class="body-ledGrad">
 <% include partials/signedInMenu %>
 
+<div class="text-center box-3">
+    <div class="btn btn-three" style="border: solid; border-color: lightskyblue; border-width: 2px"
+         onclick="syncData()">
+        <span>Sync LED To Current Status</span>
+    </div>
+</div>
+
 <div id="innerAlert" class="text-center on"></div>
+
 <div id="innerError" class="text-center off"></div>
 
 <div class="container">
@@ -21,7 +29,7 @@
 
                 <div class="card-body text-center">
 
-                    <h7 style="color:gold" class="pull-left" id="status">LED Status: <span class="off">Off</span></h7>
+                    <h7 style="color:gold" class="pull-left" id="status">LED is Off</h7>
                     <h5 class="card-title">Turn LED on or off</h5>
                     <button id="toggleButton" class="btn btn-primary">Toggle</button>
 
@@ -88,7 +96,7 @@
 
                     <h5 class="card-title">Change LED brightness</h5>
                     <input type="range" min="0" max="255" value="75" id="brightnessSlider">
-                    <p text-center id="sliderOutput">0</p>
+                    <p text-center id="sliderOutput">75</p>
                     <br>
                     <button onclick="sliderInput()" class="btn btn-primary">Save</button>
 
@@ -117,24 +125,6 @@
             saveRadioResult();
         })
     })
-
-    function testIOT() {
-        let inputValue = document.getElementById("testBlinker").value;
-        let input1value = document.getElementById("testBlinkerDelay").value;
-
-        $.ajax({
-            type: 'POST',
-            url: '/api/test_blinker',
-            dataType: 'json',
-            data: {
-                input: inputValue,
-                input1: input1value
-            }
-        }).done(function (result) {
-            var data = result.data;
-            console.log(data);
-        })
-    }
 
     const pickr = Pickr.create({
         el: '.color-picker',
@@ -181,17 +171,16 @@
         }).done(function (result) {
             var data = result.data;
             var status = result.status;
-            if(result.code == 200){
+            if (result.code == 200) {
                 $('#innerAlert').fadeIn(1000).html(status);
-                setTimeout(function(){
+                setTimeout(function () {
                     $('#innerAlert').fadeOut(1000)
-                },3000);
-            }
-            else{
+                }, 3000);
+            } else {
                 $('#innerError').fadeIn(1000).html(status);
-                setTimeout(function(){
+                setTimeout(function () {
                     $('#innerError').fadeOut(1000)
-                },3000);
+                }, 3000);
             }
             console.log(data);
         }).fail(function (err) {
@@ -219,16 +208,16 @@
         }).done(function (result) {
             var data = result.data;
             var status = result.status;
-            if(result.code == 200){
+            if (result.code == 200) {
                 $('#innerAlert').fadeIn(1000).html(status);
-                setTimeout(function(){
+                setTimeout(function () {
                     $('#innerAlert').fadeOut(1000)
-                },3000);            }
-            else{
+                }, 3000);
+            } else {
                 $('#innerError').fadeIn(1000).html(status);
-                setTimeout(function(){
+                setTimeout(function () {
                     $('#innerError').fadeOut(1000)
-                },3000);
+                }, 3000);
             }
             console.log(result);
         }).fail(function (err) {
@@ -268,12 +257,11 @@
             }).done(function (result) {
                 var data = result.data;
                 var status = result.status;
-                if(result.code == 200){
+                if (result.code == 200) {
                     document.getElementById("status").innerHTML
-                        = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
-                }
-                else{
-                    document.getElementById("status").innerHTML = "LED Status: " + "<span class='off'>" + savedRadioResult + "</span>";
+                        = "LED is " + savedRadioResult;
+                } else {
+                    document.getElementById("status").innerHTML = "LED is " + savedRadioResult;
                 }
                 console.log(data);
             }).fail(function (err) {
@@ -293,13 +281,12 @@
             }).done(function (result) {
                 var data = result.data;
                 var status = result.status;
-                if(result.code == 200){
+                if (result.code == 200) {
                     document.getElementById("status").innerHTML
-                        = "LED Status: " + "<span class='off'>" + savedRadioResult + "</span>";
-                }
-                else{
+                        = "LED is " + savedRadioResult;
+                } else {
                     document.getElementById("status").innerHTML
-                        = "LED Status: " + "<span class='on'>" + savedRadioResult + "</span>";
+                        = "LED is " + savedRadioResult;
 
                 }
                 console.log(data);
@@ -308,6 +295,41 @@
             })
         }
     }
+
+    function syncData() {
+        $.ajax({
+                type: 'GET',
+                url: '/api/led_control/sync_data',
+            }).done(function (result) {
+                var data = result.data;
+                var status = result.status;
+                if(result.code == 200){
+                    var resultToggle = status.toggle;
+                    var resultRed = status.red;
+                    var resultGreen = status.green;
+                    var resultBlue = status.blue;
+                    var resultBrightness = status.brightness;
+                    console.log(resultToggle);
+                    console.log(resultBrightness);
+                    console.log(status);
+                    document.getElementById("brightnessSlider").value = resultBrightness;
+                    $('#sliderOutput').html(resultBrightness);
+                    $('#custom').show()
+                    $('#custom').css("backgroundColor", `rgb(${resultRed}, ${resultGreen}, ${resultBlue})`);
+                    if(resultToggle == 0){
+                        $('#status').html("LED is Off").css("color", "#FFD700");
+                    }
+                    else{
+                        $('#status').html("LED is On").css("color", "#FFD700");
+                    }
+                }
+                else{
+                    console.log(status);
+                }
+            }).fail(function(err){
+                console.log(err);
+            })
+    };
 
 </script>
 </body>

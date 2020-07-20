@@ -4,7 +4,6 @@ var config = require('../config');
 exports.setLEDColor = function (req, res) {
 
 
-
     var led_color = req.body;
     var r = led_color.r;
     var g = led_color.g;
@@ -156,6 +155,34 @@ exports.getIP = function (req, res) {
     clientIP = ip;
     res.send(200);
     console.log("Received IP is: " + ip);
+};
+
+exports.syncData = function (req, res) {
+    request.get({
+        url: 'http://' + clientIP + ':8080/sync_data',
+    }, function (err, response) {
+        if (err) {
+            console.log(err);
+        } else {
+            if (response.statusCode == 200) {
+                console.log("status code=" + "200");
+            } else if (response.statusCode != 200) {
+                console.log("non 200 status code=");
+            }
+        }
+        var resultJSON = JSON.parse(response.body);
+        var resultToggle = resultJSON.toggle;
+        var resultRed = resultJSON.red;
+        var resultGreen = resultJSON.green;
+        var resultBlue = resultJSON.blue;
+        var resultBrightness = resultJSON.brightness;
+
+        res.send({
+            'code': 200,
+            'status': resultJSON
+        });
+    });
+
 };
 
 

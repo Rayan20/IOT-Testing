@@ -47,4 +47,6 @@ router.get('/clear_cookie', function (req, res, next) {
 
 router.get('/led_control/client_ip/:ip', ledController.getIP);
 
+router.get('/led_control/sync_data', ledController.syncData);
+
 module.exports = router;
