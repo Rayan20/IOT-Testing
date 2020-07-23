@@ -176,7 +176,7 @@
                 b: pickedColor[2]
             }
         }).done(function (result) {
-            if(result === 500){
+            if (result === 500) {
                 $('#errorMessage').html("LED may not be online");
             }
             var data = result.data;
@@ -186,8 +186,7 @@
                 setTimeout(function () {
                     $('#innerAlert').fadeOut(1000)
                 }, 3000);
-            }
-            else {
+            } else {
                 $('#innerError').fadeIn(1000).html(status);
                 setTimeout(function () {
                     $('#innerError').fadeOut(1000)
@@ -217,7 +216,7 @@
                 brightness: slider.value
             }
         }).done(function (result) {
-            if(result === 500){
+            if (result === 500) {
                 $('#errorMessage').html("LED may not be online");
             }
             var data = result.data;
@@ -269,7 +268,7 @@
                     "toggle": signal
                 }
             }).done(function (result) {
-                if(result === 500){
+                if (result === 500) {
                     $('#errorMessage').html("LED may not be online");
                 }
                 var data = result.data;
@@ -296,7 +295,7 @@
                     "toggle": signal
                 }
             }).done(function (result) {
-                if(result === 500){
+                if (result === 500) {
                     $('#errorMessage').html("LED may not be online");
                 }
                 var data = result.data;
@@ -318,41 +317,39 @@
 
     function syncData() {
         $.ajax({
-                type: 'GET',
-                url: '/api/led_control/sync_data',
-            }).done(function (result) {
-            if(result === "500"){
+            type: 'GET',
+            url: '/api/led_control/sync_data',
+        }).done(function (result) {
+            if (result === "500") {
                 $('#errorMessage').html("LED may not be online");
             }
-                var data = result.data;
-                var status = result.status;
-                if(result.code == 200){
-                    var resultToggle = status.toggle;
-                    var resultRed = status.red;
-                    var resultGreen = status.green;
-                    var resultBlue = status.blue;
-                    var resultBrightness = status.brightness;
-                    console.log(resultToggle);
-                    console.log(resultBrightness);
-                    console.log(status);
-                    document.getElementById("brightnessSlider").value = resultBrightness;
-                    $('#sliderOutput').html(resultBrightness);
-                    $('#custom').show();
-                    $('#notif').show();
-                    $('#custom').css("backgroundColor", `rgb(${resultRed}, ${resultGreen}, ${resultBlue})`);
-                    if(resultToggle == 0){
-                        $('#status').html("LED is Off").css("color", "#FFD700");
-                    }
-                    else{
-                        $('#status').html("LED is On").css("color", "#FFD700");
-                    }
+            var data = result.data;
+            var status = result.status;
+            if (result.code == 200) {
+                var resultToggle = status.toggle;
+                var resultRed = status.red;
+                var resultGreen = status.green;
+                var resultBlue = status.blue;
+                var resultBrightness = status.brightness;
+                console.log(resultToggle);
+                console.log(resultBrightness);
+                console.log(status);
+                document.getElementById("brightnessSlider").value = resultBrightness;
+                $('#sliderOutput').html(resultBrightness);
+                $('#custom').show();
+                $('#notif').show();
+                $('#custom').css("backgroundColor", `rgb(${resultRed}, ${resultGreen}, ${resultBlue})`);
+                if (resultToggle == 0) {
+                    $('#status').html("LED is Off").css("color", "#FFD700");
+                } else {
+                    $('#status').html("LED is On").css("color", "#FFD700");
                 }
-                else{
-                    console.log(status);
-                }
-            }).fail(function(err){
-                console.log(err);
-            })
+            } else {
+                console.log(status);
+            }
+        }).fail(function (err) {
+            console.log(err);
+        })
     };
 
 </script>

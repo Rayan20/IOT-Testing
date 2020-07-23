@@ -26,8 +26,7 @@ exports.setLEDColor = function (req, res) {
                 return res.send("500");
 
             }
-        }
-        else {
+        } else {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.statusCode);
@@ -77,8 +76,7 @@ exports.setLEDBrightness = function (req, res) {
             } else {
                 return res.send("500");
             }
-        }
-        else {
+        } else {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.headers['content-type']);
@@ -120,8 +118,7 @@ exports.toggle = function (req, res) {
             } else {
                 return res.send("500");
             }
-        }
-            else {
+        } else {
 
             if (response.statusCode == 200) {
                 console.log("status code=" + response.headers['content-type']);

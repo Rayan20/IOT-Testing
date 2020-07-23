@@ -1,21 +1,16 @@
-
 module.exports = {
     env: {
-        name:"local",
+        name: "local",
         aws_region: 'us-east-1',
 
     },
-    iot:{
-        //server: "http://192.168.1.128"
-        //server: "http://63.152.45.86"
-        //server: "50.80.241.185"
-    },
+    iot: {},
     encryption: {
-       key: 'x&-{0p7yE#x7}^a',
+        key: 'x&-{0p7yE#x7}^a',
     },
 
     nodeJS: {
-        enableCluster:false
+        enableCluster: false
     },
     db: {
         host: "ec2-34-194-198-176.compute-1.amazonaws.com",
@@ -24,8 +19,6 @@ module.exports = {
         port: "5432",
         database: "dfdbjkkk76vaff",
         debug: false,
-        //multipleStatements: true,
-        //connectionLimit: 10,
     },
 
 

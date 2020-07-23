@@ -4,10 +4,9 @@ var ledController = require('../controller/ledController');
 
 router.get('/LEDLight', function (req, res, next) {
     var mycookie = req.cookies[IOTCookie];
-    if(!mycookie){
+    if (!mycookie) {
         res.render('login', {loginMessage: ''});
-    }
-    else{
+    } else {
         res.render('LEDLight', {Username: mycookie, message: ''});
     }
 });
@@ -26,10 +25,9 @@ router.get('/shoppingList', function (req, res, next) {
 
 router.get('/temperatureAndHumidity', function (req, res, next) {
     var mycookie = req.cookies[IOTCookie];
-    if(!mycookie){
+    if (!mycookie) {
         res.render('login', {loginMessage: ''});
-    }
-    else{
+    } else {
         res.render('temperatureAndHumidity', {Username: mycookie, message: ''});
     }
 });

@@ -7,7 +7,7 @@
 <body class="container" style="padding-top:5%">
 <div class="faded">
     <h3 class="text-center">Log in!</h3>
-    <div class="error text-center" id="loginMsg" style="color:red"><font size="3"><%-loginMessage %></font></div>
+    <div class="error text-center" id="loginMsg" style="color:red"><font size="3"><%- loginMessage %></font></div>
     <form class="cmxform" id="loginForm" method="post" autocomplete="on" style="padding-left: 15%; padding-right: 15%">
         <div class="form-group text-center">
             <label for="username">
@@ -48,21 +48,21 @@
                     required: "Please provide a password",
                 }
             },
-            submitHandler: function(form) {
+            submitHandler: function (form) {
                 callLoginServer(form);
             }
         })
     });
+
     function callLoginServer(form) {
 
         var username = form.username.value;
         var password = form.password.value;
         var stayLoggedIn = false;
 
-        if(form.stayLoggedIn.checked){
+        if (form.stayLoggedIn.checked) {
             stayLoggedIn = true;
-        }
-        else{
+        } else {
             stayLoggedIn = false;
         }
 

@@ -3,19 +3,39 @@
 <head>
     <% include partials/head %>
 </head>
-<body class="body-tempGrad" style="padding-bottom: 30%">
+<body class="left-side" style="padding-bottom: 12%">
 <script>
 </script>
 <% include partials/signedInMenu %>
-<div class="container">
+<br>
+<div class="container text-center">
     <div class="row">
-        <div class="col-12 col-sm-6 text-center">
-            <button class="btn btn-outline-warning">Current Temperature</button>
+        <div class="col-md-12 col-sm-12 col-lg-6 text-center container1" style="border-right: 3px solid black;
+  height: auto">
+            <h5 style="color: gold">Temperature</h5>
+            <img src="/public/images/temperature.jpg" alt="thermometer" class="image" style="border: solid black 3px">
+            <div class="overlay container1">
+                <div class="text">
+                    <button id="temperature" class="btn btn-three"
+                            style="border: solid mediumpurple 3px; color: mediumpurple">Current Temperature
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-sm-6 text-center">
-            <button class="btn btn-outline-warning">Current Humidity</button>
+        <div class="col-md-12 col-sm-12 col-lg-6 text-center container-left" style="border-left: 3px solid black;
+  height: auto">
+            <h5 style="color:gold">Humidity</h5>
+            <img src="/public/images/humidity.jpg" alt="humidity" class="image" style="border: solid black 3px">
+            <div class="overlay-left container-left">
+                <div class="text">
+                    <button id="humidity" class="btn btn-three"
+                            style="border: solid mediumpurple 3px; color: mediumpurple">Current Humidity
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+    <button class="btn third">Track Weather History</button>
 </div>
 </body>
 </html>

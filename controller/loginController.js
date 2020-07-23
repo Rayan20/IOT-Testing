@@ -9,7 +9,7 @@ var cipher;
 var decipher;
 var decrypted;
 
-function encrypt (text) {
+function encrypt(text) {
     return new Promise((resolve, reject) => {
         try {
             var cipher = crypto.createCipher('aes-256-cbc', config.environment.encryption.key);
@@ -23,6 +23,7 @@ function encrypt (text) {
 
     })
 }
+
 function decrypt(encryptedPass) {
     return new Promise((resolve, reject) => {
         var decrypted = null;
@@ -132,8 +133,7 @@ exports.registerAccount = function (registration, callback) {
             })
 
         })
-    }
-    else{
+    } else {
         callback('error', null);
     }
 };
