@@ -184,6 +184,64 @@ hr {
     -webkit-transition: all 150ms ease-in-out;
     transition: all 150ms ease-in-out;
 }
+
 .third:hover {
     box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+}
+
+.button-f {
+    width: 300px; /* set a width so it doesnt change upon hover */
+    border: 1px solid #004B84;
+    background: transparent;
+    opacity: 70%;
+    padding: 3px 21px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 12px;
+    text-decoration: none;
+    vertical-align: middle;
+    letter-spacing: 2px;
+}
+
+.button-f:hover span {
+    display: none
+}
+
+.button-f:hover:before {
+    content: "Change to celsius?";
+}
+
+.button-f:hover {
+    background-color: aqua;
+    opacity: 70%;
+}
+
+.button-c {
+    width: 300px; /* set a width so it doesnt change upon hover */
+    border: 1px solid #004B84;
+    background: transparent;
+    padding: 3px 21px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 12px;
+    text-decoration: none;
+    vertical-align: middle;
+    letter-spacing: 2px;
+}
+
+.button-c:hover span {
+    display: none;
+}
+
+.button-c:hover:before {
+    content: "Change to fahrenheit?";
+}
+
+.button-c:hover {
+    background-color: aqua;
+    opacity: 70%;
 }

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ledController = require('../controller/ledController');
+var iot_controller = require('../controller/iot_controller');
 
 router.get('/LEDLight', function (req, res, next) {
     var mycookie = req.cookies[IOTCookie];
@@ -32,19 +32,23 @@ router.get('/temperatureAndHumidity', function (req, res, next) {
     }
 });
 
-router.post('/led_control/color', ledController.setLEDColor);
+router.post('/led_control/color', iot_controller.setLEDColor);
 
-router.post('/led_control/brightness', ledController.setLEDBrightness);
+router.post('/led_control/brightness', iot_controller.setLEDBrightness);
 
-router.post('/led_control/toggle', ledController.toggle);
+router.post('/led_control/toggle', iot_controller.toggle);
 
 router.get('/clear_cookie', function (req, res, next) {
     res.clearCookie(IOTCookie);
     res.redirect('/login');
 });
 
-router.get('/led_control/client_ip/:ip', ledController.getIP);
+router.get('/led_control/client_ip/:ip', iot_controller.getIP);
 
-router.get('/led_control/sync_data', ledController.syncData);
+router.get('/led_control/sync_data', iot_controller.syncData);
+
+router.get('/temp_control/temperature', iot_controller.getTemp);
+
+router.get('/temp_control/humidity', iot_controller.getHumidity);
 
 module.exports = router;

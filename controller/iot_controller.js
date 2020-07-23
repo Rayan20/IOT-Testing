@@ -178,4 +178,61 @@ exports.syncData = function (req, res) {
 
 };
 
+exports.getTemp = function (req, res) {
+    request.get({
+            url: 'http://' + clientIP + ':8080/get_temp',
+            timeout: 5000
+        }, function (err, response) {
+            if (err) {
+                if (err.code === 'EHOSTUNREACH') {
+                    return res.send("500");
+                } else {
+                    return res.send("500");
+                }
+                console.log(err);
+            } else {
+                if (response.statusCode == 200) {
+                    console.log("status code=" + "200");
+                } else if (response.statusCode != 200) {
+                    return console.log("non 200 status code=");
+                }
+            }
+            var resultJSON = JSON.parse(response.body);
+
+            res.send({
+                'code': 200,
+                'status': resultJSON
+            });
+        }
+    );
+};
+
+exports.getHumidity = function (req, res) {
+    request.get({
+            url: 'http://' + clientIP + ':8080/get_humidity',
+            timeout: 5000
+        }, function (err, response) {
+            if (err) {
+                if (err.code === 'EHOSTUNREACH') {
+                    return res.send("500");
+                } else {
+                    return res.send("500");
+                }
+                console.log(err);
+            } else {
+                if (response.statusCode == 200) {
+                    console.log("status code=" + "200");
+                } else if (response.statusCode != 200) {
+                    console.log("non 200 status code=");
+                }
+            }
+            var resultJSON = JSON.parse(response.body);
+
+            res.send({
+                'code': 200,
+                'status': resultJSON
+            });
+        }
+    )
+};
 
