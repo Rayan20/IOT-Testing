@@ -236,3 +236,10 @@ exports.getHumidity = function (req, res) {
     )
 };
 
+exports.storeData = function(req, res){
+    var fahrenheit = req.params.fahrenheit;
+    var celsius = req.params.celsius;
+    var humidity = req.params.humidity;
+    res.send(200);
+};
+

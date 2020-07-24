@@ -51,4 +51,10 @@ router.get('/temp_control/temperature', iot_controller.getTemp);
 
 router.get('/temp_control/humidity', iot_controller.getHumidity);
 
+router.get('/weatherHistory', function (req, res, next) {
+    res.render('weatherHistory', {title: 'Express'});
+});
+
+router.get('/temp_control/store_data/:fahrenheit/:celsius/:humidity', iot_controller.storeData);
+
 module.exports = router;
