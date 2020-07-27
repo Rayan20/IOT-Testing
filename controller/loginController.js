@@ -111,7 +111,7 @@ exports.registerAccount = function (registration, callback) {
                 // give the query a unique name
                 name: 'addAccount',
                 text: 'INSERT INTO test.account(username, password, email, created_on) VALUES($1, $2, $3, $4) RETURNING *',
-                values: [registration.username, result, registration.email, 'now()'],
+                values: [registration.username, result, registration.email, 'now()']
             };
             pool.connect((err, client, release) => {
                 if (err) {

@@ -1,5 +1,6 @@
 var request = require('request');
 var config = require('../config');
+const pool = require('../db');
 
 exports.setLEDColor = function (req, res) {
 
@@ -236,10 +237,133 @@ exports.getHumidity = function (req, res) {
     )
 };
 
-exports.storeData = function(req, res){
+exports.storeData = function (req, res) {
     var fahrenheit = req.params.fahrenheit;
     var celsius = req.params.celsius;
     var humidity = req.params.humidity;
+    console.log(fahrenheit + ", " + celsius + ", " + humidity);
+    if (fahrenheit && celsius && humidity) {
+        var weatherData = {
+            "fahrenheit": fahrenheit,
+            "celsius": celsius,
+            "humidity": humidity
+        };
+        exports.addData(weatherData);
+    }
     res.send(200);
+
+};
+
+exports.addData = function (data) {
+    var fahrenheit = data.fahrenheit;
+    var celsius = data.celsius;
+    var humidity = data.humidity;
+    const addData = {
+        name: 'addWeather',
+        text: 'INSERT INTO test.weather(time_stamp, fahrenheit, celsius, humidity) VALUES($1, $2, $3, $4) RETURNING *',
+        values: ['now()', fahrenheit, celsius, humidity]
+    };
+    pool.connect((err, client, release) => {
+        if (err) {
+            console.log(err);
+        }
+        client.query(addData, (err, res) => {
+            release();
+            if (err) {
+                console.error("error in addData " + err.stack);
+            }
+        })
+    })
+};
+
+exports.queryData = function (req, res) {
+
+    var history = req.params.history;
+    var weatherJSON = [];
+    var mycookie = req.cookies[IOTCookie];
+
+
+    if (history === "hour") {
+
+        const getData = {
+            name: 'getWeather',
+            text: 'SELECT * FROM test.Weather AS "Weather" WHERE "Weather"."time_stamp" BETWEEN NOW() - INTERVAL \'1 HOURS\' AND NOW() ORDER BY "Weather"."time_stamp" DESC'
+        };
+        pool.connect((err, client, release) => {
+            release();
+            if (err) {
+                console.log(err);
+                res.send("error");
+            }
+            client.query(getData, (err, result) => {
+                for (let row in result.rows){
+                    var weatherArray = result.rows[row];
+                    weatherJSON.push(weatherArray);
+                }
+                console.log(weatherJSON);
+                if (err) {
+                    return console.log('error in addWeather' + err.stack);
+                }
+                res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+            });
+        })
+
+    } else if (history === "day") {
+
+        var history = req.params.history;
+
+        const getData = {
+            name: 'getWeather',
+            text: 'SELECT * FROM test.weather AS "Weather" WHERE "Weather"."time_stamp" BETWEEN NOW() - INTERVAL \'24 HOURS\' AND NOW() ORDER BY "Weather"."time_stamp" DESC'
+        };
+        pool.connect((err, client, release) => {
+            release();
+            if (err) {
+                console.log(err);
+                res.send("error");
+            }
+            client.query(getData, (err, result) => {
+                for (let row in result.rows){
+                    var weatherArray = result.rows[row];
+                    weatherJSON.push(weatherArray);
+                }
+                console.log(weatherJSON);
+                if (err) {
+                    return console.log('error in addWeather' + err.stack);
+                }
+                res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+            });
+        });
+
+    } else if (history === "week") {
+
+        var history = req.params.history;
+
+        const getData = {
+            name: 'getWeather',
+            text: 'SELECT * FROM test.weather AS "Weather" WHERE "Weather"."time_stamp" BETWEEN NOW() - INTERVAL \'148 HOURS\' AND NOW() ORDER BY "Weather"."time_stamp" DESC'
+        };
+        pool.connect((err, client, release) => {
+            release();
+            if (err) {
+                console.log(err);
+                res.send("error");
+            }
+            client.query(getData, (err, result) => {
+                for (let row in result.rows){
+                    var weatherArray = result.rows[row];
+                    weatherJSON.push(weatherArray);
+                }
+                console.log(weatherJSON);
+
+                if (err) {
+                    console.log('error in addWeather' + err.stack);
+                }
+                res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+            });
+
+        })
+    }
+
 };
 

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head %>
+</head>
+<body style="background-color:darkslategray">
+<% include partials/signedInMenu %>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<div>
+    <button class="myButton-back" onclick="back()"style="margin-left:2%; margin-top:2%">Back</button>
+</div>
+<div class="container text-center" style="padding-top:5%">
+    <div id="celsius" style="display: none"></div>
+    <div id="fahrenheit"></div>
+    <br>
+    <button class="btn third" id="fahrenheitButton" onclick="celsiusSwitch()">Change to celsius</button>
+    <button class="btn third" id="celsiusButton" style="display:none" onclick="fahrenheitSwitch()">Change to fahrenheit</button>
+</div>
+<script>
+
+    var weather = {
+        history: <%- JSON.stringify(data) %>
+    };
+    var time = [];
+    var fahrenheit = [];
+    var celsius = [];
+    var humid = [];
+
+    for (let row of weather.history) {
+
+        humid.push(row.humidity);
+
+        celsius.push(row.celsius);
+
+        fahrenheit.push(row.fahrenheit);
+
+        time.push(row.time_stamp.substring(0, row.time_stamp.length - 14) + " " + row.time_stamp.substring(11, row.time_stamp.length - 5));
+
+    }
+
+    console.log(time);
+    console.log(fahrenheit);
+    console.log(celsius);
+    console.log(humid);
+
+    var trace1 = {
+        type: "scatter",
+        mode: "lines",
+        name: 'Temperature (°F)',
+        x: time,
+        y: fahrenheit,
+        line: {color: '#17BECF'}
+    }
+
+    var trace2 = {
+        type: "scatter",
+        mode: "lines",
+        name: 'Humidity (%)',
+        x: time,
+        y: humid,
+        line: {color: '#7F7F7F'}
+    }
+
+    var layout = {
+        autosize: false,
+        width: 1100,
+        height: 450,
+        title: 'Temperature & Humidity (GMT)',
+        margin: {
+            l: 50,
+            r: 50,
+            b: 100,
+            t: 100,
+            pad: 4
+        },
+        paper_bgcolor: 'white',
+        plot_bgcolor: 'white'
+    };
+
+    var data1 = [trace1, trace2];
+
+    Plotly.newPlot('fahrenheit', data1, layout);
+
+    var trace3 = {
+        type: "scatter",
+        mode: "lines",
+        name: 'Celsius (°C)',
+        x: time,
+        y: celsius,
+        line: {color: '#17BECF'}
+    }
+
+    var trace4 = {
+        type: "scatter",
+        mode: "lines",
+        name: 'Humidity (%)',
+        x: time,
+        y: humid,
+        line: {color: '#7F7F7F'}
+    }
+
+    var data2 = [trace3, trace4];
+
+    Plotly.newPlot('celsius', data2, layout);
+
+    function celsiusSwitch(){
+        $('#fahrenheit').hide(100);
+        $('#celsius').show(100);
+        $('#fahrenheitButton').hide(100);
+        $('#celsiusButton').show(100);
+    }
+
+    function fahrenheitSwitch(){
+        $('#fahrenheit').show(100);
+        $('#celsius').hide(100);
+        $('#fahrenheitButton').show(100);
+        $('#celsiusButton').hide(100);
+    }
+
+    function back(){
+        window.history.back();
+    }
+
+</script>
+</body>
+</html>

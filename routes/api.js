@@ -57,4 +57,6 @@ router.get('/weatherHistory', function (req, res, next) {
 
 router.get('/temp_control/store_data/:fahrenheit/:celsius/:humidity', iot_controller.storeData);
 
+router.get('/temp_control/query_data/:history', iot_controller.queryData);
+
 module.exports = router;

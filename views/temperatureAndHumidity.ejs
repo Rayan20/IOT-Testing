@@ -8,7 +8,7 @@
 </script>
 <% include partials/signedInMenu %>
 <br>
-<div class="container text-center">
+<div class="container text-center" id="container">
     <div id="errorMSG" style="color:red"></div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-lg-6 text-center container1" style="border-right: 3px solid black;
@@ -32,9 +32,11 @@
 
                     <div>
 
-                        <button id="celsiusConv" class="button-f" onclick="celsius()" style="display:none; color: deepskyblue"><span>Fahrenheit</span></button>
+                        <button id="celsiusConv" class="button-f" onclick="celsius()"
+                                style="display:none; color: deepskyblue"><span>Fahrenheit</span></button>
 
-                        <button id="fahrenheitConv" class="button-c" onclick="fahrenheit()" style="display:none; color: deepskyblue"><span>Celsius</span></button>
+                        <button id="fahrenheitConv" class="button-c" onclick="fahrenheit()"
+                                style="display:none; color: deepskyblue"><span>Celsius</span></button>
 
                     </div>
 
@@ -48,7 +50,8 @@
             <div class="overlay-left container-left">
                 <div class="text">
                     <button id="humidity" class="btn btn-three"
-                            style="border: solid mediumpurple 3px; color: mediumpurple" onclick="getHumidity()">Current Humidity
+                            style="border: solid mediumpurple 3px; color: mediumpurple" onclick="getHumidity()">Current
+                        Humidity
                     </button>
                     <div id="humidBody" style="display:none">
                         <img src="/public/images/humidityDrops.jpg" alt="humidity" style="height:20%; width:20%">
@@ -58,19 +61,35 @@
             </div>
         </div>
     </div>
-    <hr/>
-    <a href="/api/weatherHistory">
-    <button class="btn third">Track Weather History</button>
-    </a>
 </div>
+<div id="weatherHistory" class="text-center">
+    <hr/>
+    <button class="btn third" onclick="openNav()">Track Weather History</button>
+</div>
+<form id="weatherForm" method="get">
+    <div class="sidebar" id="mySidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="#" id="hour" onclick="weatherCall('hour')">Past Hour</a>
+        <a href="#" id="day" onclick="weatherCall('day')">Past 24 Hours</a>
+        <a href="#" id="week" onclick="weatherCall('week')">Past 7 days</a>
+    </div>
+</form>
 <script>
 
     var tempC = null;
     var tempF = null;
 
-    $(document).ready(function () {
-
-    });
+    function weatherCall(selection){
+        if(selection==='hour'){
+            $('#weatherForm').attr("action", "/api/temp_control/query_data/hour").submit();
+        }
+        else if(selection==='day'){
+            $('#weatherForm').attr("action", "/api/temp_control/query_data/day").submit();
+        }
+        else if(selection==='week'){
+            $('#weatherForm').attr("action", "/api/temp_control/query_data/week").submit();
+        }
+    }
 
     function getTemp() {
 
@@ -129,11 +148,20 @@
         $('#fahrenheitConv').show();
     }
 
-    function fahrenheit(){
+    function fahrenheit() {
         $('#tempF').show();
         $('#tempC').hide();
         $('#celsiusConv').show();
         $('#fahrenheitConv').hide();
+    }
+
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("weatherHistory").style.marginLeft = "0";
     }
 
 
