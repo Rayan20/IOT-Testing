@@ -286,7 +286,6 @@ exports.queryData = function (req, res) {
                     return console.log('error in addWeather' + err.stack);
                 }
                 res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-                res.send(200);
             });
         })
 
@@ -314,7 +313,6 @@ exports.queryData = function (req, res) {
                     return console.log('error in addWeather' + err.stack);
                 }
                 res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-                res.send(200);
             });
         });
 
@@ -343,7 +341,6 @@ exports.queryData = function (req, res) {
                     console.log('error in addWeather' + err.stack);
                 }
                 res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-                res.send(200);
             });
 
         })
