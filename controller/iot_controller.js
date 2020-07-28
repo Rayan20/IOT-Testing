@@ -179,9 +179,9 @@ exports.syncData = function (req, res) {
 
 };
 
-exports.getTemp = function (req, res) {
+exports.get_weather_data = function (req, res) {
     request.get({
-            url: 'http://' + clientIP + ':8080/get_temp',
+            url: 'http://' + clientIP + ':8080/get_weather_data',
             timeout: 5000
         }, function (err, response) {
             if (err) {
@@ -208,55 +208,49 @@ exports.getTemp = function (req, res) {
     );
 };
 
-exports.getHumidity = function (req, res) {
+    // var fahrenheit = req.params.fahrenheit;
+    // var celsius = req.params.celsius;
+    // var humidity = req.params.humidity;
+    // console.log(fahrenheit + ", " + celsius + ", " + humidity);
+    // if (fahrenheit && celsius && humidity) {
+    //     var weatherData = {
+    //         "fahrenheit": fahrenheit,
+    //         "celsius": celsius,
+    //         "humidity": humidity
+    //     };
+    //     exports.addData(weatherData);
+    // }
+    // res.send(200);
+
+    var requestLoop = setInterval(function(){
     request.get({
-            url: 'http://' + clientIP + ':8080/get_humidity',
-            timeout: 5000
-        }, function (err, response) {
-            if (err) {
-                if (err.code === 'EHOSTUNREACH') {
-                    return res.send("500");
-                } else {
-                    return res.send("500");
-                }
-                console.log(err);
+        url: 'http://' + clientIP + ':8080/get_weather_data',
+        timeout: 5000
+    }, function (err, response) {
+        if (err) {
+            if (err.code === 'EHOSTUNREACH') {
+                return console.log(err);
             } else {
-                if (response.statusCode == 200) {
-                    console.log("status code=" + "200");
-                } else if (response.statusCode != 200) {
-                    console.log("non 200 status code=");
-                }
+                return console.log(err);
             }
-            var resultJSON = JSON.parse(response.body);
-
-            res.send({
-                'code': 200,
-                'status': resultJSON
-            });
+            return console.log(err);
+        } else {
+            if (response.statusCode == 200) {
+                console.log("status code=" + "200");
+            } else if (response.statusCode != 200) {
+                console.log("non 200 status code=");
+            }
         }
-    )
-};
 
-exports.storeData = function (req, res) {
-    var fahrenheit = req.params.fahrenheit;
-    var celsius = req.params.celsius;
-    var humidity = req.params.humidity;
-    console.log(fahrenheit + ", " + celsius + ", " + humidity);
-    if (fahrenheit && celsius && humidity) {
-        var weatherData = {
-            "fahrenheit": fahrenheit,
-            "celsius": celsius,
-            "humidity": humidity
-        };
-        exports.addData(weatherData);
-    }
-    res.send(200);
+        var resultJSON = JSON.parse(response.body);
+        exports.addData(resultJSON);
 
-};
+    })
+}, 10000);
 
 exports.addData = function (data) {
-    var fahrenheit = data.fahrenheit;
-    var celsius = data.celsius;
+    var celsius = data.temp;
+    var fahrenheit = (celsius * 9/5) + 32;
     var humidity = data.humidity;
     const addData = {
         name: 'addWeather',
@@ -305,6 +299,7 @@ exports.queryData = function (req, res) {
                     return console.log('error in addWeather' + err.stack);
                 }
                 res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+                res.send(200);
             });
         })
 
@@ -332,6 +327,7 @@ exports.queryData = function (req, res) {
                     return console.log('error in addWeather' + err.stack);
                 }
                 res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+                res.send(200);
             });
         });
 
@@ -360,6 +356,7 @@ exports.queryData = function (req, res) {
                     console.log('error in addWeather' + err.stack);
                 }
                 res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+                res.send(200);
             });
 
         })

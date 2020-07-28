@@ -103,8 +103,8 @@
             var data = result.data;
             var status = result.status;
             if (result.code === 200) {
-                tempC = status.tempC;
-                tempF = status.tempF;
+                tempC = status.temp;
+                tempF = (tempC * (9/5)) + 32;
 
                 $('#temperature').hide();
                 $('#celsiusConv').show();
@@ -116,12 +116,12 @@
         }).fail(function (err) {
             console.log(err);
         })
-    };
+    }
 
     function getHumidity() {
         $.ajax({
             type: 'GET',
-            url: '/api/temp_control/humidity'
+            url: '/api/temp_control/temperature'
         }).done(function (result) {
             if (result === "500") {
                 $('#errorMSG').html("Sensor may not be online");

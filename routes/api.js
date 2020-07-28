@@ -47,15 +47,11 @@ router.get('/led_control/client_ip/:ip', iot_controller.getIP);
 
 router.get('/led_control/sync_data', iot_controller.syncData);
 
-router.get('/temp_control/temperature', iot_controller.getTemp);
-
-router.get('/temp_control/humidity', iot_controller.getHumidity);
+router.get('/temp_control/temperature', iot_controller.get_weather_data);
 
 router.get('/weatherHistory', function (req, res, next) {
     res.render('weatherHistory', {title: 'Express'});
 });
-
-router.get('/temp_control/store_data/:fahrenheit/:celsius/:humidity', iot_controller.storeData);
 
 router.get('/temp_control/query_data/:history', iot_controller.queryData);
 
