@@ -104,7 +104,8 @@
             var status = result.status;
             if (result.code === 200) {
                 tempC = status.temp;
-                tempF = (tempC * (9/5)) + 32;
+                tempFUnround = (tempC * (9/5)) + 32;
+                var tempF = tempFUnround.toFixed(2);
 
                 $('#temperature').hide();
                 $('#celsiusConv').show();

@@ -208,20 +208,6 @@ exports.get_weather_data = function (req, res) {
     );
 };
 
-    // var fahrenheit = req.params.fahrenheit;
-    // var celsius = req.params.celsius;
-    // var humidity = req.params.humidity;
-    // console.log(fahrenheit + ", " + celsius + ", " + humidity);
-    // if (fahrenheit && celsius && humidity) {
-    //     var weatherData = {
-    //         "fahrenheit": fahrenheit,
-    //         "celsius": celsius,
-    //         "humidity": humidity
-    //     };
-    //     exports.addData(weatherData);
-    // }
-    // res.send(200);
-
     var requestLoop = setInterval(function(){
     request.get({
         url: 'http://' + clientIP + ':8080/get_weather_data',
@@ -246,11 +232,12 @@ exports.get_weather_data = function (req, res) {
         exports.addData(resultJSON);
 
     })
-}, 10000);
+}, 60000);
 
 exports.addData = function (data) {
     var celsius = data.temp;
-    var fahrenheit = (celsius * 9/5) + 32;
+    var fahrenheit_unround = (celsius * 9/5) + 32;
+    var fahrenheit = fahrenheit_unround.toFixed(2);
     var humidity = data.humidity;
     const addData = {
         name: 'addWeather',
