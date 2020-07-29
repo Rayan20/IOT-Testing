@@ -208,7 +208,7 @@ exports.get_weather_data = function (req, res) {
     );
 };
 
-    var requestLoop = setInterval(function(){
+var requestLoop = setInterval(function () {
     request.get({
         url: 'http://' + clientIP + ':8080/get_weather_data',
         timeout: 5000
@@ -236,7 +236,7 @@ exports.get_weather_data = function (req, res) {
 
 exports.addData = function (data) {
     var celsius = data.temp;
-    var fahrenheit_unround = (celsius * 9/5) + 32;
+    var fahrenheit_unround = (celsius * 9 / 5) + 32;
     var fahrenheit = fahrenheit_unround.toFixed(2);
     var humidity = data.humidity;
     const addData = {
@@ -276,17 +276,29 @@ exports.queryData = function (req, res) {
                 console.log(err);
                 res.send("error");
             }
-            client.query(getData, (err, result) => {
-                for (let row in result.rows){
+            client.query(getData).then((result) => {
+                if (!result) {
+                    return console.log("result.rows is empty");
+                }
+                for (let row in result.rows) {
                     var weatherArray = result.rows[row];
                     weatherJSON.push(weatherArray);
                 }
+                client.end();
                 console.log(weatherJSON);
+
                 if (err) {
-                    return console.log('error in addWeather' + err.stack);
+                    console.log('error in addWeather' + err.stack);
                 }
-                res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-            });
+                return res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+            }).then(f => {
+                console.log(f);
+            }).catch(e => {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+
+            })
         })
 
     } else if (history === "day") {
@@ -303,17 +315,29 @@ exports.queryData = function (req, res) {
                 console.log(err);
                 res.send("error");
             }
-            client.query(getData, (err, result) => {
-                for (let row in result.rows){
+            client.query(getData).then((result) => {
+                if (!result) {
+                    return console.log("result.rows is empty");
+                }
+                for (let row in result.rows) {
                     var weatherArray = result.rows[row];
                     weatherJSON.push(weatherArray);
                 }
+                client.end();
                 console.log(weatherJSON);
+
                 if (err) {
-                    return console.log('error in addWeather' + err.stack);
+                    console.log('error in addWeather' + err.stack);
                 }
-                res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-            });
+                return res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+            }).then(f => {
+                console.log(f);
+            }).catch(e => {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+
+            })
         });
 
     } else if (history === "week") {
@@ -330,21 +354,31 @@ exports.queryData = function (req, res) {
                 console.log(err);
                 res.send("error");
             }
-            client.query(getData, (err, result) => {
-                for (let row in result.rows){
+            client.query(getData).then((result) => {
+                if (!result) {
+                    return console.log("result.rows is empty");
+                }
+                for (let row in result.rows) {
                     var weatherArray = result.rows[row];
                     weatherJSON.push(weatherArray);
                 }
+                client();
                 console.log(weatherJSON);
 
                 if (err) {
                     console.log('error in addWeather' + err.stack);
                 }
-                res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-            });
+                return res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
+            }).then(f => {
+                console.log(f);
+            }).catch(e => {
+                    if (err) {
+                        return console.error('error running query', err);
+                    }
 
+                })
         })
-    }
 
+    }
 };
 
