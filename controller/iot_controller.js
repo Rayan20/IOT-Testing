@@ -267,7 +267,7 @@ exports.queryData = function (req, res) {
     if (history === "hour") {
 
         const getData = {
-            name: 'getWeather',
+            name: 'get1',
             text: 'SELECT * FROM test.Weather AS "Weather" WHERE "Weather"."time_stamp" BETWEEN NOW() - INTERVAL \'1 HOURS\' AND NOW() ORDER BY "Weather"."time_stamp" DESC'
         };
         pool.connect((err, client, release) => {
@@ -276,27 +276,20 @@ exports.queryData = function (req, res) {
                 console.log(err);
                 res.send("error");
             }
-            client.query(getData).then((result) => {
-                if (!result) {
-                    return console.log("result.rows is empty");
+            client.query(getData, async(err, result) => {
+
+                if (err){
+                    return console.log(err);
                 }
+
                 for (let row in result.rows) {
                     var weatherArray = result.rows[row];
                     weatherJSON.push(weatherArray);
                 }
-                client.end();
+
                 console.log(weatherJSON);
 
-                if (err) {
-                    console.log('error in addWeather' + err.stack);
-                }
                 return res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-            }).then(f => {
-                console.log(f);
-            }).catch(e => {
-                if (err) {
-                    return console.error('error running query', err);
-                }
 
             })
         })
@@ -306,7 +299,7 @@ exports.queryData = function (req, res) {
         var history = req.params.history;
 
         const getData = {
-            name: 'getWeather',
+            name: 'get24',
             text: 'SELECT * FROM test.weather AS "Weather" WHERE "Weather"."time_stamp" BETWEEN NOW() - INTERVAL \'24 HOURS\' AND NOW() ORDER BY "Weather"."time_stamp" DESC'
         };
         pool.connect((err, client, release) => {
@@ -315,37 +308,31 @@ exports.queryData = function (req, res) {
                 console.log(err);
                 res.send("error");
             }
-            client.query(getData).then((result) => {
-                if (!result) {
-                    return console.log("result.rows is empty");
+            client.query(getData, async(err, result) => {
+
+                if (err){
+                    return console.log(err);
                 }
+
                 for (let row in result.rows) {
                     var weatherArray = result.rows[row];
                     weatherJSON.push(weatherArray);
                 }
-                client.end();
+
                 console.log(weatherJSON);
 
-                if (err) {
-                    console.log('error in addWeather' + err.stack);
-                }
                 return res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-            }).then(f => {
-                console.log(f);
-            }).catch(e => {
-                if (err) {
-                    return console.error('error running query', err);
-                }
 
             })
-        });
+
+        })
 
     } else if (history === "week") {
 
         var history = req.params.history;
 
         const getData = {
-            name: 'getWeather',
+            name: 'getWeek',
             text: 'SELECT * FROM test.weather AS "Weather" WHERE "Weather"."time_stamp" BETWEEN NOW() - INTERVAL \'148 HOURS\' AND NOW() ORDER BY "Weather"."time_stamp" DESC'
         };
         pool.connect((err, client, release) => {
@@ -354,31 +341,25 @@ exports.queryData = function (req, res) {
                 console.log(err);
                 res.send("error");
             }
-            client.query(getData).then((result) => {
-                if (!result) {
-                    return console.log("result.rows is empty");
+            client.query(getData, async(err, result) => {
+
+                if (err){
+                    return console.log(err);
                 }
+
                 for (let row in result.rows) {
                     var weatherArray = result.rows[row];
                     weatherJSON.push(weatherArray);
                 }
-                client();
+
                 console.log(weatherJSON);
 
-                if (err) {
-                    console.log('error in addWeather' + err.stack);
-                }
                 return res.render('weatherHistory', {"data": weatherJSON, "Username": mycookie});
-            }).then(f => {
-                console.log(f);
-            }).catch(e => {
-                    if (err) {
-                        return console.error('error running query', err);
-                    }
 
-                })
-        })
-
+            })
+        });
     }
 };
+
+
 
