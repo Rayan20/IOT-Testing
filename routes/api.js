@@ -11,6 +11,15 @@ router.get('/LEDLight', function (req, res, next) {
     }
 });
 
+router.get('/monitor', function (req, res, next) {
+    var mycookie = req.cookies[IOTCookie];
+    if (!mycookie) {
+        res.render('login', {loginMessage: ''});
+    } else {
+        res.redirect('https://angular-iot.herokuapp.com');
+    }
+});
+
 router.get('/login', function (req, res, next) {
     res.render('login', {title: 'Express', loginMessage: ''});
 });

@@ -1,6 +1,6 @@
-const environment = require('./environment.config');
+const environment = require('./environment.config-local');
 
 module.exports = {
-  environment,
-  externalRequestTimeout: 90000
+    environment,
+    externalRequestTimeout: 90000
 };
