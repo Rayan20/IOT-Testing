@@ -232,7 +232,7 @@ var requestLoop = setInterval(function () {
         exports.addData(resultJSON);
 
     })
-}, 600000);
+}, 60000);
 
 exports.addData = function (data) {
     var celsius = data.temp;
