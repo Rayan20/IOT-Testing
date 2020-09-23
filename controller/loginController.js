@@ -1,6 +1,6 @@
 const pool = require('../db');
 var crypto = require('crypto');
-var config = require('../config');
+var config = require('config');
 
 var iv;
 var encrypted;

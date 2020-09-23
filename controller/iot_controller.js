@@ -1,5 +1,5 @@
 var request = require('request');
-var config = require('../config');
+var config = require('config');
 const pool = require('../db');
 
 exports.setLEDColor = function (req, res) {
