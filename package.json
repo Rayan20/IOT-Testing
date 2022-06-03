@@ -21,7 +21,7 @@
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "jquery": "^3.5.1",
-    "jquery-validation": "^1.19.2",
+    "jquery-validation": "^1.19.4",
     "morgan": "~1.8.1",
     "node": "^14.5.0",
     "node-postgres": "^0.6.2",
